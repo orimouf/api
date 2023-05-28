@@ -6,6 +6,8 @@ const authRoute = require("./routes/auth")
 const userRoute = require("./routes/users")
 const productRoute = require("./routes/products")
 const listRoute = require("./routes/lists")
+const appData = require("./routes/appdata")
+
 
 dotenv.config();
 
@@ -27,6 +29,7 @@ app.use("/api/auth", authRoute)
 app.use("/api/users", userRoute)
 app.use("/api/products", productRoute)
 app.use("/api/lists", listRoute)
+app.use("/api/appdata", appData)
 
 
 app.listen(8800, () => {
