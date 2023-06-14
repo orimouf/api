@@ -7,6 +7,10 @@ const OrderSchema = new mongoose.Schema(
         clientId: { type: String, required: true },
         productListId: { type: String, required: true },
         totalToPay: { type: String, required: true },
+        verssi: { type: String, required: true },
+        rest: { type: String, required: true },
+        date: { type: String, required: true },
+        isCheck: { type: Boolean, default: false },
         isCredit: { type: Boolean, default: false }
     },
     {timestamps: true}

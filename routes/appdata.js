@@ -283,7 +283,11 @@ router.post("/dataorders", async (req, res) => {
                         clientId: Element.client_id,
                         productListId: Element.product_list_id,
                         totalToPay: Element.total_to_pay,
-                        isCredit: Element.iscredit
+                        verssi: Element.verssi,
+                        rest: Element.rest,
+                        date: Element.date,
+                        isCredit: Element.iscredit,
+                        isCheck: Element.is_check
                     },
                     { new: true }
                 )
@@ -298,9 +302,13 @@ router.post("/dataorders", async (req, res) => {
                 clientId: Element.client_id,
                 productListId: Element.product_list_id,
                 totalToPay: Element.total_to_pay,
-                isCredit: Element.iscredit
+                verssi: Element.verssi,
+                rest: Element.rest,
+                date: Element.date,
+                isCredit: Element.iscredit,
+                isCheck: Element.is_check
             })
-    
+
             try{
                 const order = await newOrder.save()
                 status = "done"           
