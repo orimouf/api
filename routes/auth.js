@@ -6,6 +6,13 @@ const jwt = require("jsonwebtoken")
 
 //REGISTER
 router.post("/register", async (req, res) => {
+    res.status(201).json({
+        status: 1,
+        message: "Registration Successful",
+        data: {
+            
+        }
+    })
 
     const newUser = new User({
         appId: req.body.appId,
