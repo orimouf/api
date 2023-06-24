@@ -19,7 +19,7 @@ router.post("/dataclients", async (req, res) => {
         let is_credit = Element.is_credit ? true : false
         let is_frigo = Element.is_frigo ? true : false
         let is_promo = Element.is_promo ? true : false
-        
+
         if (idCheck != null) {
             try {
                 const updatedClient = await Client.findByIdAndUpdate(idCheck._id, 
@@ -70,6 +70,7 @@ router.post("/dataclients", async (req, res) => {
     for (let i = 0; i < dataFromApp.length; i++) {
         const Element = dataFromApp[i]
         reutrnStatus = await insertData(Element)
+        console.log("inserting ==>  " + Element)
     }
 
     if (reutrnStatus == "done") {
