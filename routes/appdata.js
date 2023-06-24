@@ -56,7 +56,7 @@ router.post("/dataclients", async (req, res) => {
                 creditBon: Element.credit_bon,
                 lastServe: Element.last_serve
             })
-            console.log("inserting ==>  " + clientName)
+            console.log("inserting ==>  " + Element.client_name)
             try{
                 const client = await newClient.save()
                 status = "done"           
