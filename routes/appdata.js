@@ -16,6 +16,10 @@ router.post("/dataclients", async (req, res) => {
     async function insertData(Element) {
         var status = ""
         const idCheck = await Client.findOne({ appId: Element.id})
+        let is_credit = Element.is_credit ? true : false
+        let is_frigo = Element.is_frigo ? true : false
+        let is_promo = Element.is_promo ? true : false
+        
         if (idCheck != null) {
             try {
                 const updatedClient = await Client.findByIdAndUpdate(idCheck._id, 
@@ -26,9 +30,9 @@ router.post("/dataclients", async (req, res) => {
                         region: Element.region,
                         prices: Element.prices,
                         oldCredit: Element.old_credit,
-                        isCredit: Element.is_credit,
-                        isFrigo: Element.is_frigo,
-                        isPromo: Element.is_promo,
+                        isCredit: is_credit,
+                        isFrigo: is_frigo,
+                        isPromo: is_promo,
                         creditBon: Element.credit_bon,
                         lastServe: Element.last_serve
                     },
@@ -46,9 +50,9 @@ router.post("/dataclients", async (req, res) => {
                 region: Element.region,
                 prices: Element.prices,
                 oldCredit: Element.old_credit,
-                isCredit: Element.is_credit,
-                isFrigo: Element.is_frigo,
-                isPromo: Element.is_promo,
+                isCredit: is_credit,
+                isFrigo: is_frigo,
+                isPromo: is_promo,
                 creditBon: Element.credit_bon,
                 lastServe: Element.last_serve
             })
