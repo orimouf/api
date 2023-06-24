@@ -12,70 +12,70 @@ router.post("/dataclients", async (req, res) => {
 
     const dataFromApp = req.body.data
     var reutrnStatus
-
-    async function insertData(Element) {
-        var status = ""
-        const idCheck = await Client.findOne({ appId: Element.id})
-        if (idCheck != null) {
-            try {
-                const updatedClient = await Client.findByIdAndUpdate(idCheck._id, 
-                    {
-                        appId: Element.id,
-                        clientName: Element.client_name,
-                        phone: Element.phone,
-                        region: Element.region,
-                        prices: Element.prices,
-                        oldCredit: Element.old_credit,
-                        isCredit: Element.is_credit,
-                        isFrigo: Element.is_frigo,
-                        isPromo: Element.is_promo,
-                        creditBon: Element.credit_bon,
-                        lastServe: Element.last_serve
-                    },
-                    { new: true }
-                )
-                status = "done"
-            } catch (err) {
-                status = err
-            }
-        } else {
-            const newClient = new Client ({
-                appId: Element.id,
-                clientName: Element.client_name,
-                phone: Element.phone,
-                region: Element.region,
-                prices: Element.prices,
-                oldCredit: Element.old_credit,
-                isCredit: Element.is_credit,
-                isFrigo: Element.is_frigo,
-                isPromo: Element.is_promo,
-                creditBon: Element.credit_bon,
-                lastServe: Element.last_serve
-            })
+    res.status(201).json(dataFromApp)
+    // async function insertData(Element) {
+    //     var status = ""
+    //     const idCheck = await Client.findOne({ appId: Element.id})
+    //     if (idCheck != null) {
+    //         try {
+    //             const updatedClient = await Client.findByIdAndUpdate(idCheck._id, 
+    //                 {
+    //                     appId: Element.id,
+    //                     clientName: Element.client_name,
+    //                     phone: Element.phone,
+    //                     region: Element.region,
+    //                     prices: Element.prices,
+    //                     oldCredit: Element.old_credit,
+    //                     isCredit: Element.is_credit,
+    //                     isFrigo: Element.is_frigo,
+    //                     isPromo: Element.is_promo,
+    //                     creditBon: Element.credit_bon,
+    //                     lastServe: Element.last_serve
+    //                 },
+    //                 { new: true }
+    //             )
+    //             status = "done"
+    //         } catch (err) {
+    //             status = err
+    //         }
+    //     } else {
+    //         const newClient = new Client ({
+    //             appId: Element.id,
+    //             clientName: Element.client_name,
+    //             phone: Element.phone,
+    //             region: Element.region,
+    //             prices: Element.prices,
+    //             oldCredit: Element.old_credit,
+    //             isCredit: Element.is_credit,
+    //             isFrigo: Element.is_frigo,
+    //             isPromo: Element.is_promo,
+    //             creditBon: Element.credit_bon,
+    //             lastServe: Element.last_serve
+    //         })
     
-            try{
-                const client = await newClient.save()
-                status = "done"           
-            } catch (err) {
-                status = err
-            }
-        }
-        return status
-    }
+    //         try{
+    //             const client = await newClient.save()
+    //             status = "done"           
+    //         } catch (err) {
+    //             status = err
+    //         }
+    //     }
+    //     return status
+    // }
 
-    for (let i = 0; i < dataFromApp.length; i++) {
-        const Element = dataFromApp[i]
-        reutrnStatus = await insertData(Element)
-    }
+    // for (let i = 0; i < dataFromApp.length; i++) {
+    //     const Element = dataFromApp[i]
+    //     reutrnStatus = await insertData(Element)
+    // }
 
-    if (reutrnStatus == "done") {
-        res.status(201).json({
-            status: 1,
-            message: "Clients data save Successful",
-        })
-    } else {
-        res.status(500).json(reutrnStatus)
-    }
+    // if (reutrnStatus == "done") {
+    //     res.status(201).json({
+    //         status: 1,
+    //         message: "Clients data save Successful",
+    //     })
+    // } else {
+    //     res.status(500).json(reutrnStatus)
+    // }
     
 })
 
