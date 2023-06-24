@@ -56,10 +56,11 @@ router.post("/dataclients", async (req, res) => {
                 creditBon: Element.credit_bon,
                 lastServe: Element.last_serve
             })
-            console.log("inserting ==>  " + Element.client_name)
+
             try{
                 const client = await newClient.save()
                 status = "done"           
+                console.log(Element.id + "  inserting ==>  " + Element.client_name + " ---- "+ status)
             } catch (err) {
                 status = err
             }
@@ -70,7 +71,6 @@ router.post("/dataclients", async (req, res) => {
     for (let i = 0; i < dataFromApp.length; i++) {
         const Element = dataFromApp[i]
         reutrnStatus = await insertData(Element)
-        console.log("inserting ==>  " + i)
     }
 
     if (reutrnStatus == "done") {
