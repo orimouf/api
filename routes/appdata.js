@@ -68,7 +68,7 @@ router.post("/dataclients", async (req, res) => {
         reutrnStatus = reutrnStatus + await insertData(Element)
     }
 
-    if (reutrnStatus == dataFromApp.length) {
+    if (reutrnStatus == dataFromApp.length-1) {
         res.status(201).json({
             status: 1,
             message: "Clients data save Successful",
