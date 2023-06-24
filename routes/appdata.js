@@ -57,13 +57,13 @@ router.post("/dataclients", async (req, res) => {
                 lastServe: Element.last_serve
             })
 
-            try{
+            // try{
                 const client = await newClient.save()
                 status = "done"           
                 console.log(Element.id + "  inserting ==>  " + Element.client_name + " ---- "+ status)
-            } catch (err) {
-                status = err
-            }
+            // } catch (err) {
+            //     status = err
+            // }
         }
         return status
     }
