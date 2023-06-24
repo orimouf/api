@@ -14,7 +14,7 @@ router.post("/dataclients", async (req, res) => {
     var reutrnStatus
 
     async function insertData(Element) {
-        var status = 0
+        var status = ""
         const idCheck = await Client.findOne({ appId: Element.id})
         if (idCheck != null) {
             try {
@@ -34,9 +34,9 @@ router.post("/dataclients", async (req, res) => {
                     },
                     { new: true }
                 )
-                status = 1
+                status = "done"
             } catch (err) {
-                status = 0
+                status = err
             }
         } else {
             const newClient = new Client ({
@@ -55,9 +55,9 @@ router.post("/dataclients", async (req, res) => {
     
             try{
                 const client = await newClient.save()
-                status = 1           
+                status = "done"           
             } catch (err) {
-                status = 0
+                status = err
             }
         }
         return status
@@ -65,10 +65,10 @@ router.post("/dataclients", async (req, res) => {
 
     for (let i = 0; i < dataFromApp.length; i++) {
         const Element = dataFromApp[i]
-        reutrnStatus = reutrnStatus + await insertData(Element)
+        reutrnStatus = await insertData(Element)
     }
 
-    if (reutrnStatus == dataFromApp.length-1) {
+    if (reutrnStatus == "done") {
         res.status(201).json({
             status: 1,
             message: "Clients data save Successful",
