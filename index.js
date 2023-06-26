@@ -8,6 +8,7 @@ const regionRoute = require("./routes/regions")
 const productRoute = require("./routes/products")
 const listRoute = require("./routes/lists")
 const appData = require("./routes/appdata")
+const paymentData = require("./models/Payment")
 const clientRoute = require("./routes/clients")
 
 
@@ -32,6 +33,7 @@ app.use("/api/users", userRoute)
 app.use("/api/regions", regionRoute)
 app.use("/api/clients", clientRoute)
 app.use("/api/products", productRoute)
+app.use("/api/payments", paymentData)
 app.use("/api/lists", listRoute)
 app.use("/api/appdata", appData)
 

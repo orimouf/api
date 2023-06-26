@@ -6,6 +6,7 @@ const Product = require("../models/Product")
 const Order = require("../models/Order")
 const OrderedProduct = require("../models/OrderedProduct")
 const CryptoJS = require("crypto-js")
+const Payment = require("../models/Payment")
 
 //SET DATA CLIENTS
 router.post("/dataclients", async (req, res) => {
@@ -370,6 +371,83 @@ router.post("/dataorders", async (req, res) => {
         res.status(201).json({
             status: 1,
             message: "Orders data save Successful",
+        })
+    } else {
+        res.status(500).json(reutrnStatus)
+    }
+    
+})
+
+//SET DATA PAYMENTS
+router.post("/datapayments", async (req, res) => {
+
+    const dataFromApp = req.body.data
+    var reutrnStatus
+
+    async function insertData(Element) {
+        var status = ""
+        const idCheck = await Payment.findOne({ appId: Element.id})
+        if (idCheck != null) {
+            try {
+                const appDate = new Date(Element.updatedAt)
+                const serverDate = new Date(idCheck.updatedAt)
+
+                if (appDate > serverDate) {
+                    const updatedPayment = await Payment.findByIdAndUpdate(idCheck._id, 
+                        {
+                            appId: Element.id,
+                            clientName: Element.client_name,
+                            clientId: Element.client_id,
+                            productListId: Element.product_list_id,
+                            totalToPay: Element.total_to_pay,
+                            verssi: Element.verssi,
+                            rest: Element.rest,
+                            date: Element.date,
+                            isCredit: Element.iscredit,
+                            isCheck: Element.is_check
+                        },
+                        { new: true }
+                    )
+                    status = "done"
+                } else {
+                    status = "done"
+                }
+            } catch (err) {
+                status = err
+            }
+        } else {
+            const newPayment = new Payment ({
+                appId: Element.id,
+                clientName: Element.client_name,
+                clientId: Element.client_id,
+                productListId: Element.product_list_id,
+                totalToPay: Element.total_to_pay,
+                verssi: Element.verssi,
+                rest: Element.rest,
+                date: Element.date,
+                isCredit: Element.iscredit,
+                isCheck: Element.is_check
+            })
+
+            try{
+                const payment = await newPayment.save()
+                status = "done"           
+            } catch (err) {
+                status = err
+            }
+        }
+        return status
+    }
+
+    for (let i = 0; i < dataFromApp.length; i++) {
+        const Element = dataFromApp[i]
+        reutrnStatus = await insertData(Element)
+    }
+
+    if (reutrnStatus == "done") {
+        res.status(201).json({
+            status: 1,
+            message: "Payments data save Successful",
         })
     } else {
         res.status(500).json(reutrnStatus)

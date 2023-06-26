@@ -1,0 +1,19 @@
+const mongoose = require("mongoose")
+
+const PaymentSchema = new mongoose.Schema(
+    {
+        appId: { type: String, required: true, unique: true },
+        clientName: { type: String, required: true },
+        clientId: { type: String, required: true },
+        region: { type: String, required: true },
+        oldSomme: { type: String, required: true },
+        verssi: { type: String, required: true },
+        rest: { type: String, required: true },
+        date: { type: String, required: true },
+        isCheck: { type: Boolean, default: false },
+        date: { type: String, default: true }
+    },
+    {timestamps: true}
+)
+
+module.exports = mongoose.model("Payment", PaymentSchema)
