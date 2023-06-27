@@ -10,8 +10,7 @@ const PaymentSchema = new mongoose.Schema(
         verssi: { type: String, required: true },
         rest: { type: String, required: true },
         date: { type: String, required: true },
-        isCheck: { type: Boolean, default: false },
-        date: { type: String, default: true }
+        isCheck: { type: Boolean, default: false }
     },
     {timestamps: true}
 )
