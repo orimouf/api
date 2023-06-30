@@ -93,7 +93,7 @@ router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             const order = await Order.find()
-            res.status(200).json(order)
+            res.status(200).json({ order })
         } catch (err) {
             res.status(500).json(err)
         }
