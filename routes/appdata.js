@@ -99,7 +99,7 @@ router.post("/datausers", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await User.findOne({ appId: Element.id})
+        const idCheck = await User.findOne({ id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
@@ -176,7 +176,7 @@ router.post("/dataregions", async (req, res) => {
  
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Region.findOne({ appId: Element.id})
+        const idCheck = await Region.findOne({ id: Element.server_id})
        
         if (idCheck != null) {
             try {
@@ -240,7 +240,7 @@ router.post("/dataproducts", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Product.findOne({ appId: Element.id})
+        const idCheck = await Product.findOne({ id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
@@ -309,7 +309,7 @@ router.post("/dataorders", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Order.findOne({ _id: Element.server_id})
+        const idCheck = await Order.findOne({ id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
@@ -386,7 +386,7 @@ router.post("/datapayments", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Payment.findOne({ appId: Element.id})
+        const idCheck = await Payment.findOne({ id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
@@ -463,7 +463,7 @@ router.post("/dataorderproducts", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await OrderedProduct.findOne({ appId: Element.id})
+        const idCheck = await OrderedProduct.findOne({ id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
