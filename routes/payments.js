@@ -90,10 +90,9 @@ router.get("/random", verify, async (req, res) => {
 //GET ALL
 
 router.get("/", async (req, res) => {
-    const query = req.query.new
     // if(req.user.isAdmin) {
         try {
-            const payment = query ? await Region.find().sort({_id: -1}).limit(10) : await Region.find()
+            const payment = await Region.find()
             res.status(200).json({ payment })
         } catch (err) {
             res.status(500).json(err)
