@@ -309,7 +309,7 @@ router.post("/dataorders", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Order.findOne({ appId: Element.id})
+        const idCheck = await Order.findOne({ _id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
