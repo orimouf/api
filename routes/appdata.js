@@ -465,74 +465,74 @@ router.post("/dataorderproducts", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await OrderedProduct.findOne({ id: Element.server_id})
-        if (idCheck != null) {
-            try {
-                const appDate = new Date(Element.updatedAt)
-                const serverDate = new Date(idCheck.updatedAt)
+        // const idCheck = await OrderedProduct.findOne({ id: Element.server_id})
+        // if (idCheck != null) {
+        //     try {
+        //         const appDate = new Date(Element.updatedAt)
+        //         const serverDate = new Date(idCheck.updatedAt)
 
-                if (appDate > serverDate) {
-                    const updatedOrderedProduct = await OrderedProduct.findByIdAndUpdate(idCheck._id, 
-                        {
-                            appId: Element.id,
-                            orderId: Element.orderId,
-                            mini_qty: Element.mini_qty,
-                            mini_q_u: Element.mini_q_u,
-                            trio_qty: Element.trio_qty,
-                            trio_q_u: Element.trio_q_u,
-                            solo_qty: Element.solo_qty,
-                            solo_q_u: Element.solo_q_u,
-                            pot_qty: Element.pot_qty,
-                            pot_q_u: Element.pot_q_u,
-                            gini_qty: Element.gini_qty,
-                            gini_q_u: Element.gini_q_u,
-                            big_qty: Element.big_qty,
-                            big_q_u: Element.big_q_u,
-                            cornito_4_qty: Element.cornito_4_qty,
-                            cornito_4_q_u: Element.cornito_4_q_u,
-                            cornito_5_qty: Element.cornito_5_qty,
-                            cornito_5_q_u: Element.cornito_5_q_u,
-                            cornito_g_qty: Element.cornito_g_qty,
-                            cornito_g_q_u: Element.cornito_g_q_u,
-                            gofrito_qty: Element.gofrito_qty,
-                            gofrito_q_u: Element.gofrito_q_u,
-                            pot_v_qty: Element.pot_v_qty,
-                            pot_v_q_u: Element.pot_v_q_u,
-                            g8_qty: Element.g8_qty,
-                            g8_q_u: Element.g8_q_u,
-                            gold_qty: Element.gold_qty,
-                            gold_q_u: Element.gold_q_u,
-                            skiper_qty: Element.skiper_qty,
-                            skiper_q_u: Element.skiper_q_u,
-                            scobido_qty: Element.scobido_qty,
-                            scobido_q_u: Element.scobido_q_u,
-                            mini_scobido_qty: Element.mini_scobido_qty,
-                            mini_scobido_q_u: Element.mini_scobido_q_u,
-                            venezia_qty: Element.venezia_qty,
-                            venezia_q_u: Element.venezia_q_u,
-                            bf_400_q_u: Element.bf_400_q_u,
-                            bf_250_q_u: Element.bf_250_q_u,
-                            bf_230_q_u: Element.bf_230_q_u,
-                            bf_200_q_u: Element.bf_200_q_u,
-                            bf_150_q_u: Element.bf_150_q_u,
-                            buch_q_u: Element.buch_q_u,
-                            tarte_q_u: Element.tarte_q_u,
-                            mosta_q_u: Element.mosta_q_u,
-                            misso_q_u: Element.misso_q_u,
-                            juliana_q_u: Element.juliana_q_u,
-                            bac_5_q_u: Element.bac_5_q_u,
-                            bac_6_q_u: Element.bac_6_q_u
-                        },
-                        { new: true }
-                    )
-                    status = "done"
-                } else {
-                    status = "done"
-                }
-            } catch (err) {
-                status = err
-            }
-        } else {
+        //         if (appDate > serverDate) {
+        //             const updatedOrderedProduct = await OrderedProduct.findByIdAndUpdate(idCheck._id, 
+        //                 {
+        //                     appId: Element.id,
+        //                     orderId: Element.orderId,
+        //                     mini_qty: Element.mini_qty,
+        //                     mini_q_u: Element.mini_q_u,
+        //                     trio_qty: Element.trio_qty,
+        //                     trio_q_u: Element.trio_q_u,
+        //                     solo_qty: Element.solo_qty,
+        //                     solo_q_u: Element.solo_q_u,
+        //                     pot_qty: Element.pot_qty,
+        //                     pot_q_u: Element.pot_q_u,
+        //                     gini_qty: Element.gini_qty,
+        //                     gini_q_u: Element.gini_q_u,
+        //                     big_qty: Element.big_qty,
+        //                     big_q_u: Element.big_q_u,
+        //                     cornito_4_qty: Element.cornito_4_qty,
+        //                     cornito_4_q_u: Element.cornito_4_q_u,
+        //                     cornito_5_qty: Element.cornito_5_qty,
+        //                     cornito_5_q_u: Element.cornito_5_q_u,
+        //                     cornito_g_qty: Element.cornito_g_qty,
+        //                     cornito_g_q_u: Element.cornito_g_q_u,
+        //                     gofrito_qty: Element.gofrito_qty,
+        //                     gofrito_q_u: Element.gofrito_q_u,
+        //                     pot_v_qty: Element.pot_v_qty,
+        //                     pot_v_q_u: Element.pot_v_q_u,
+        //                     g8_qty: Element.g8_qty,
+        //                     g8_q_u: Element.g8_q_u,
+        //                     gold_qty: Element.gold_qty,
+        //                     gold_q_u: Element.gold_q_u,
+        //                     skiper_qty: Element.skiper_qty,
+        //                     skiper_q_u: Element.skiper_q_u,
+        //                     scobido_qty: Element.scobido_qty,
+        //                     scobido_q_u: Element.scobido_q_u,
+        //                     mini_scobido_qty: Element.mini_scobido_qty,
+        //                     mini_scobido_q_u: Element.mini_scobido_q_u,
+        //                     venezia_qty: Element.venezia_qty,
+        //                     venezia_q_u: Element.venezia_q_u,
+        //                     bf_400_q_u: Element.bf_400_q_u,
+        //                     bf_250_q_u: Element.bf_250_q_u,
+        //                     bf_230_q_u: Element.bf_230_q_u,
+        //                     bf_200_q_u: Element.bf_200_q_u,
+        //                     bf_150_q_u: Element.bf_150_q_u,
+        //                     buch_q_u: Element.buch_q_u,
+        //                     tarte_q_u: Element.tarte_q_u,
+        //                     mosta_q_u: Element.mosta_q_u,
+        //                     misso_q_u: Element.misso_q_u,
+        //                     juliana_q_u: Element.juliana_q_u,
+        //                     bac_5_q_u: Element.bac_5_q_u,
+        //                     bac_6_q_u: Element.bac_6_q_u
+        //                 },
+        //                 { new: true }
+        //             )
+        //             status = "done"
+        //         } else {
+        //             status = "done"
+        //         }
+        //     } catch (err) {
+        //         status = err
+        //     }
+        // } else {
             const newOrderedProduct = new OrderedProduct ({
                 appId: Element.id,
                 orderId: Element.orderId,
@@ -590,7 +590,7 @@ router.post("/dataorderproducts", async (req, res) => {
             } catch (err) {
                 status = err
             }
-        }
+        // }
         return status
     }
 
