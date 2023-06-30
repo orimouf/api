@@ -305,13 +305,15 @@ router.post("/dataproducts", async (req, res) => {
 router.post("/dataorders", async (req, res) => {
 
     const dataFromApp = req.body.data
+    const time = Date.now()
+    
     var reutrnStatus
 
     async function insertData(Element) {
         var status = ""
 
         const newOrder = new Order ({
-            appId: Element.id,
+            appId: `${time}-${Element.id}`,
             clientName: Element.client_name,
             clientId: Element.client_id,
             productListId: Element.product_list_id,
@@ -353,13 +355,14 @@ router.post("/dataorders", async (req, res) => {
 router.post("/datapayments", async (req, res) => {
 
     const dataFromApp = req.body.data
+    const time = Date.now()
     var reutrnStatus
 
     async function insertData(Element) {
         var status = ""
         
         const newPayment = new Payment ({
-            appId: Element.id,
+            appId: `${time}-${Element.id}`,
             clientName: Element.client_name,
             clientId: Element.client_id,
             productListId: Element.product_list_id,
@@ -401,13 +404,14 @@ router.post("/datapayments", async (req, res) => {
 router.post("/dataorderproducts", async (req, res) => {
 
     const dataFromApp = req.body.data
+    const time = Date.now()
     var reutrnStatus
 
     async function insertData(Element) {
         var status = ""
         
         const newOrderedProduct = new OrderedProduct ({
-            appId: Element.id,
+            appId: `${time}-${Element.id}`,
             orderId: Element.orderId,
             mini_qty: Element.mini_qty,
             mini_q_u: Element.mini_q_u,
