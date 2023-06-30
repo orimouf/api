@@ -1,16 +1,16 @@
 const router = require("express").Router()
-const Product = require("../models/Product")
+const Payment = require("../models/Payment")
 const verify = require("../verifyToken")
 
 // CREATE
 
 router.post("/", verify, async (req, res) => {
     if(req.user.isAdmin) {
-        const newProduct = new Product(req.body)
+        const newPayment = new Payment(req.body)
 
         try {
-            const savedProduct = await newProduct.save()
-            res.status(200).json(savedProduct)
+            const savedPayment = await newPayment.save()
+            res.status(200).json(savedPayment)
         } catch (err) {
             res.status(500).json(err)
         }
@@ -24,12 +24,12 @@ router.post("/", verify, async (req, res) => {
 router.put("/:id", verify, async (req, res) => {
     if(req.user.isAdmin) {
         try {
-            const updatedProduct = await Product.findByIdAndUpdate(
+            const updatedPayment = await Payment.findByIdAndUpdate(
                 req.params.id, 
                 { $set: req.body },
                 { new: true }
             )
-            res.status(200).json(updatedProduct)
+            res.status(200).json(updatedPayment)
         } catch (err) {
             res.status(500).json(err)
         }
@@ -43,8 +43,8 @@ router.put("/:id", verify, async (req, res) => {
 router.delete("/:id", verify, async (req, res) => {
     if(req.user.isAdmin) {
         try {
-            await Product.findByIdAndDelete(req.params.id)
-            res.status(200).json("The product has been deleted...")
+            await Payment.findByIdAndDelete(req.params.id)
+            res.status(200).json("The Payment has been deleted...")
         } catch (err) {
             res.status(500).json(err)
         }
@@ -57,8 +57,8 @@ router.delete("/:id", verify, async (req, res) => {
 
 router.get("/find/:id", verify, async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id)
-        res.status(200).json(product)
+        const payment = await Payment.findById(req.params.id)
+        res.status(200).json(payment)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -68,20 +68,20 @@ router.get("/find/:id", verify, async (req, res) => {
 
 router.get("/random", verify, async (req, res) => {
     const type = req.query.type
-    let product
+    let payment
     try {
         if (type === "promo") {
-            product = await Product.aggregate([
+            payment = await Payment.aggregate([
               {$match: { isPromo: true} },
               { $sample: { size: 10 } },
           ])
         } else {
-            product = await Product.aggregate([
+            payment = await Payment.aggregate([
                 {$match: { isPromo: false} },
                 { $sample: { size: 10 } },
             ])
         }
-        res.status(200).json(product)
+        res.status(200).json(payment)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -92,8 +92,8 @@ router.get("/random", verify, async (req, res) => {
 router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
-            const product = await Product.find()
-            res.status(200).json({ product })
+            const payment = await Payment.find()
+            res.status(200).json({ payment })
         } catch (err) {
             res.status(500).json(err)
         }
