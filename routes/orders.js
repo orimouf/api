@@ -1,16 +1,16 @@
 const router = require("express").Router()
-const Product = require("../models/Product")
+const Order = require("../models/Order")
 const verify = require("../verifyToken")
 
 // CREATE
 
 router.post("/", verify, async (req, res) => {
     if(req.user.isAdmin) {
-        const newProduct = new Product(req.body)
+        const newOrder = new Order(req.body)
 
         try {
-            const savedProduct = await newProduct.save()
-            res.status(200).json(savedProduct)
+            const savedOrder = await newOrder.save()
+            res.status(200).json(savedOrder)
         } catch (err) {
             res.status(500).json(err)
         }
@@ -24,12 +24,12 @@ router.post("/", verify, async (req, res) => {
 router.put("/:id", verify, async (req, res) => {
     if(req.user.isAdmin) {
         try {
-            const updatedProduct = await Product.findByIdAndUpdate(
+            const updatedOrder = await Order.findByIdAndUpdate(
                 req.params.id, 
                 { $set: req.body },
                 { new: true }
             )
-            res.status(200).json(updatedProduct)
+            res.status(200).json(updatedOrder)
         } catch (err) {
             res.status(500).json(err)
         }
@@ -43,8 +43,8 @@ router.put("/:id", verify, async (req, res) => {
 router.delete("/:id", verify, async (req, res) => {
     if(req.user.isAdmin) {
         try {
-            await Product.findByIdAndDelete(req.params.id)
-            res.status(200).json("The product has been deleted...")
+            await Order.findByIdAndDelete(req.params.id)
+            res.status(200).json("The Order has been deleted...")
         } catch (err) {
             res.status(500).json(err)
         }
@@ -57,8 +57,8 @@ router.delete("/:id", verify, async (req, res) => {
 
 router.get("/find/:id", verify, async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id)
-        res.status(200).json(product)
+        const order = await Order.findById(req.params.id)
+        res.status(200).json(order)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -68,20 +68,20 @@ router.get("/find/:id", verify, async (req, res) => {
 
 router.get("/random", verify, async (req, res) => {
     const type = req.query.type
-    let product
+    let order
     try {
         if (type === "promo") {
-            product = await Product.aggregate([
+            order = await Order.aggregate([
               {$match: { isPromo: true} },
               { $sample: { size: 10 } },
           ])
         } else {
-            product = await Product.aggregate([
+            order = await Order.aggregate([
                 {$match: { isPromo: false} },
                 { $sample: { size: 10 } },
             ])
         }
-        res.status(200).json(product)
+        res.status(200).json(order)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -92,8 +92,8 @@ router.get("/random", verify, async (req, res) => {
 router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
-            const product = await Product.find()
-            res.status(200).json(product)
+            const order = await Order.find()
+            res.status(200).json(order)
         } catch (err) {
             res.status(500).json(err)
         }

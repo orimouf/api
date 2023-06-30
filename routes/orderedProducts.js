@@ -1,16 +1,16 @@
 const router = require("express").Router()
-const Product = require("../models/Product")
+const OrderedProduct = require("../models/OrderedProduct")
 const verify = require("../verifyToken")
 
 // CREATE
 
 router.post("/", verify, async (req, res) => {
     if(req.user.isAdmin) {
-        const newProduct = new Product(req.body)
+        const newOrderedProduct = new OrderedProduct(req.body)
 
         try {
-            const savedProduct = await newProduct.save()
-            res.status(200).json(savedProduct)
+            const savedOrderedProduct = await newOrderedProduct.save()
+            res.status(200).json(savedOrderedProduct)
         } catch (err) {
             res.status(500).json(err)
         }
@@ -24,12 +24,12 @@ router.post("/", verify, async (req, res) => {
 router.put("/:id", verify, async (req, res) => {
     if(req.user.isAdmin) {
         try {
-            const updatedProduct = await Product.findByIdAndUpdate(
+            const updatedOrderedProduct = await OrderedProduct.findByIdAndUpdate(
                 req.params.id, 
                 { $set: req.body },
                 { new: true }
             )
-            res.status(200).json(updatedProduct)
+            res.status(200).json(updatedOrderedProduct)
         } catch (err) {
             res.status(500).json(err)
         }
@@ -43,8 +43,8 @@ router.put("/:id", verify, async (req, res) => {
 router.delete("/:id", verify, async (req, res) => {
     if(req.user.isAdmin) {
         try {
-            await Product.findByIdAndDelete(req.params.id)
-            res.status(200).json("The product has been deleted...")
+            await OrderedProduct.findByIdAndDelete(req.params.id)
+            res.status(200).json("The OrderedProduct has been deleted...")
         } catch (err) {
             res.status(500).json(err)
         }
@@ -57,8 +57,8 @@ router.delete("/:id", verify, async (req, res) => {
 
 router.get("/find/:id", verify, async (req, res) => {
     try {
-        const product = await Product.findById(req.params.id)
-        res.status(200).json(product)
+        const orderedProduct = await OrderedProduct.findById(req.params.id)
+        res.status(200).json(orderedProduct)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -68,20 +68,20 @@ router.get("/find/:id", verify, async (req, res) => {
 
 router.get("/random", verify, async (req, res) => {
     const type = req.query.type
-    let product
+    let orderedProduct
     try {
         if (type === "promo") {
-            product = await Product.aggregate([
+            orderedProduct = await OrderedProduct.aggregate([
               {$match: { isPromo: true} },
               { $sample: { size: 10 } },
           ])
         } else {
-            product = await Product.aggregate([
+            orderedProduct = await OrderedProduct.aggregate([
                 {$match: { isPromo: false} },
                 { $sample: { size: 10 } },
             ])
         }
-        res.status(200).json(product)
+        res.status(200).json(OrderedProduct)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -92,8 +92,8 @@ router.get("/random", verify, async (req, res) => {
 router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
-            const product = await Product.find()
-            res.status(200).json(product)
+            const orderedProduct = await OrderedProduct.find()
+            res.status(200).json(orderedProduct)
         } catch (err) {
             res.status(500).json(err)
         }

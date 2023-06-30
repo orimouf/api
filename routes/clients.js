@@ -61,7 +61,6 @@ router.get("/find/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
     const query = req.query.new
-    console.log(req);
     // if(req.user.isAdmin) {
         try {
             const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()

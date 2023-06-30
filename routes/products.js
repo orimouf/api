@@ -89,17 +89,17 @@ router.get("/random", verify, async (req, res) => {
 
 //GET ALL
 
-router.get("/", verify, async (req, res) => {
-    if(req.user.isAdmin) {
+router.get("/", async (req, res) => {
+    // if(req.user.isAdmin) {
         try {
             const product = await Product.find()
             res.status(200).json(product)
         } catch (err) {
             res.status(500).json(err)
         }
-    } else {
-        res.status(500).json("you are not allowed!")
-    }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
 })
 
 module.exports = router
