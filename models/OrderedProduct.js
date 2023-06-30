@@ -6,6 +6,8 @@ const OrderedProductSchema = new mongoose.Schema(
         orderId: { type: String, required: true },
         mini_qty: { type: String, required: true },
         mini_q_u: { type: String, required: true },
+        trio_qty: { type: String, required: true },
+        trio_q_u: { type: String, required: true },
         solo_qty: { type: String, required: true },
         solo_q_u: { type: String, required: true },
         pot_qty: { type: String, required: true },
