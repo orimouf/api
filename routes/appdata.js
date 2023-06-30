@@ -313,7 +313,7 @@ router.post("/dataorders", async (req, res) => {
         var status = ""
 
         const newOrder = new Order ({
-            appId: `${time}-${Element.id}`,
+            appId: Element.id,
             clientName: Element.client_name,
             clientId: Element.client_id,
             productListId: Element.product_list_id,
@@ -362,15 +362,14 @@ router.post("/datapayments", async (req, res) => {
         var status = ""
         
         const newPayment = new Payment ({
-            appId: `${time}-${Element.id}`,
+            appId: Element.id,
             clientName: Element.client_name,
             clientId: Element.client_id,
-            productListId: Element.product_list_id,
-            totalToPay: Element.total_to_pay,
+            region: Element.region,
+            oldSomme: Element.oldSomme,
             verssi: Element.verssi,
             rest: Element.rest,
             date: Element.date,
-            isCredit: Element.iscredit,
             isCheck: Element.is_check
         })
 
@@ -411,7 +410,7 @@ router.post("/dataorderproducts", async (req, res) => {
         var status = ""
         
         const newOrderedProduct = new OrderedProduct ({
-            appId: `${time}-${Element.id}`,
+            appId: Element.id,
             orderId: Element.orderId,
             mini_qty: Element.mini_qty,
             mini_q_u: Element.mini_q_u,
