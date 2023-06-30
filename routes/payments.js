@@ -68,20 +68,20 @@ router.get("/find/:id", verify, async (req, res) => {
 
 router.get("/random", verify, async (req, res) => {
     const type = req.query.type
-    let payment
+    let payments
     try {
         if (type === "promo") {
-            payment = await Payment.aggregate([
+            payments = await Payment.aggregate([
               {$match: { isPromo: true} },
               { $sample: { size: 10 } },
           ])
         } else {
-            payment = await Payment.aggregate([
+            payments = await Payment.aggregate([
                 {$match: { isPromo: false} },
                 { $sample: { size: 10 } },
             ])
         }
-        res.status(200).json(payment)
+        res.status(200).json(payments)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -93,8 +93,8 @@ router.get("/", async (req, res) => {
     const query = req.query.new
     // if(req.user.isAdmin) {
         try {
-            const payment = query ? await Payment.find().sort({_id: -1}).limit(10) : await Payment.find()
-            res.status(200).json({ payment })
+            const payments = query ? await Payment.find().sort({_id: -1}).limit(10) : await Payment.find()
+            res.status(200).json({ payments })
         } catch (err) {
             res.status(500).json(err)
         }

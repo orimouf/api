@@ -68,20 +68,20 @@ router.get("/find/:id", verify, async (req, res) => {
 
 router.get("/random", verify, async (req, res) => {
     const type = req.query.type
-    let product
+    let products
     try {
         if (type === "promo") {
-            product = await Product.aggregate([
+            products = await Product.aggregate([
               {$match: { isPromo: true} },
               { $sample: { size: 10 } },
           ])
         } else {
-            product = await Product.aggregate([
+            products = await Product.aggregate([
                 {$match: { isPromo: false} },
                 { $sample: { size: 10 } },
             ])
         }
-        res.status(200).json(product)
+        res.status(200).json(products)
     } catch (err) {
         res.status(500).json(err)
     }
@@ -92,8 +92,8 @@ router.get("/random", verify, async (req, res) => {
 router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
-            const product = await Product.find()
-            res.status(200).json({ product })
+            const products = await Product.find()
+            res.status(200).json({ products })
         } catch (err) {
             res.status(500).json(err)
         }
