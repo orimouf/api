@@ -311,7 +311,7 @@ router.post("/dataorders", async (req, res) => {
         var status = ""
         var idCheck 
         (Element.server_id != "") ? idCheck = await Order.findOne({ id: Element.server_id}) : idCheck = null
-        
+        console.log(idCheck);
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
