@@ -305,15 +305,20 @@ router.post("/dataproducts", async (req, res) => {
 router.post("/dataorders", async (req, res) => {
 
     const dataFromApp = req.body.data
-    const time = Date.now()
-    
+    var idCheck
+    var idObj = []
     var reutrnStatus
-
+    
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Order.findOne({ id: Element.server_id})
+        console.log(Element.id);
+
+        Element.server_id == "" ? idCheck = null : idCheck = await Order.findById(Element.server_id)
         
-        if (idCheck == null) {
+        console.log(idCheck);
+        if (idCheck != null) {
+            status = "done"
+        } else { 
             const newOrder = new Order ({
                 appId: Element.id,
                 clientName: Element.client_name,
@@ -329,26 +334,21 @@ router.post("/dataorders", async (req, res) => {
     
             try{
                 const order = await newOrder.save()
-                status = idCheck._id          
+                idObj.push(newOrder)
+                status = "done"         
             } catch (err) {
-                status = "ERROR"
+                status = err
             }
-        } else {
-            status = "isExist" 
         }
         return status
     }
 
     for (let i = 0; i < dataFromApp.length; i++) {
-        const Element = dataFromApp[i]
-        reutrnStatus = await insertData(Element)
+        reutrnStatus = await insertData(dataFromApp[i])
     }
 
-    if (reutrnStatus != "ERROR" && reutrnStatus != "" ) {
-        res.status(201).json({
-            status: 1,
-            message: reutrnStatus //"Orders data save Successful",
-        })
+    if (reutrnStatus == "done") {
+        res.status(201).json({ idObj })
     } else {
         res.status(500).json(reutrnStatus)
     }
