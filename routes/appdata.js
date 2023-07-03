@@ -311,7 +311,8 @@ router.post("/dataorders", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Product.findOne({ id: Element.server_id})
+        const idCheck = await Order.findOne({ id: Element.server_id})
+        
         if (idCheck == null) {
             const newOrder = new Order ({
                 appId: Element.id,
@@ -328,12 +329,12 @@ router.post("/dataorders", async (req, res) => {
     
             try{
                 const order = await newOrder.save()
-                status = "done"           
+                status = idCheck._id          
             } catch (err) {
-                status = err
+                status = "ERROR"
             }
         } else {
-            status = "done" 
+            status = "isExist" 
         }
         return status
     }
@@ -343,10 +344,10 @@ router.post("/dataorders", async (req, res) => {
         reutrnStatus = await insertData(Element)
     }
 
-    if (reutrnStatus == "done") {
+    if (reutrnStatus != "ERROR" && reutrnStatus != "" ) {
         res.status(201).json({
             status: 1,
-            message: "Orders data save Successful",
+            message: reutrnStatus //"Orders data save Successful",
         })
     } else {
         res.status(500).json(reutrnStatus)
