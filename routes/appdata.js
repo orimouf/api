@@ -173,33 +173,14 @@ router.post("/dataregions", async (req, res) => {
 
     const dataFromApp = req.body.data
     var reutrnStatus
+    var idCheck
  
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Region.findOne({ id: Element.server_id})
+        Element.server_id == "" ? idCheck = null : idCheck = await Region.findById(Element.server_id)
        
         if (idCheck != null) {
-            try {
-                
-                const appDate = new Date(Element.updatedAt)
-                const serverDate = new Date(idCheck.updatedAt)
-
-                if (appDate > serverDate) {
-                    const updatedRegion = await Region.findByIdAndUpdate(idCheck._id, 
-                        {
-                            appId: Element.id,
-                            regionName: Element.region_name
-                        },
-                        { new: true }
-                    )
-                    status = "done"
-                } else {
-                    status = "done"
-                }
-                
-            } catch (err) {
-                status = err
-            }
+            status = "done"
         } else {
             const newRegion = new Region ({
                 appId: Element.id,
