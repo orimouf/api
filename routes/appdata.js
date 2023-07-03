@@ -331,7 +331,7 @@ router.post("/dataorders", async (req, res) => {
     
             try{
                 const order = await newOrder.save()
-                idObj.push(newOrder)
+                idObj.push(order)
                 status = "done"         
             } catch (err) {
                 status = err
@@ -372,7 +372,7 @@ router.post("/datapayments", async (req, res) => {
                 clientName: Element.client_name,
                 clientId: Element.client_id,
                 region: Element.region,
-                oldSomme: Element.oldSomme,
+                oldSomme: Element.old_somme,
                 verssi: Element.verssi,
                 rest: Element.rest,
                 date: Element.date,
@@ -381,6 +381,7 @@ router.post("/datapayments", async (req, res) => {
 
             try{
                 const payment = await newPayment.save()
+                idObj.push(payment)
                 status = "done"           
             } catch (err) {
                 status = err
@@ -469,6 +470,7 @@ router.post("/dataorderproducts", async (req, res) => {
         
             try{
                 const orderedProduct = await newOrderedProduct.save()
+                idObj.push(orderedProduct)
                 status = "done"           
             } catch (err) {
                 status = err
