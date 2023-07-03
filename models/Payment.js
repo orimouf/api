@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const PaymentSchema = new mongoose.Schema(
     {
-        appId: { type: String, required: true, unique: true },
+        appId: { type: String, required: true },
         clientName: { type: String, required: true },
         clientId: { type: String, required: true },
         region: { type: String, required: true },

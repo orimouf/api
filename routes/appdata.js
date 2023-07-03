@@ -311,27 +311,30 @@ router.post("/dataorders", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-
-        const newOrder = new Order ({
-            appId: Element.id,
-            clientName: Element.client_name,
-            clientId: Element.client_id,
-            productListId: Element.product_list_id,
-            totalToPay: Element.total_to_pay,
-            verssi: Element.verssi,
-            rest: Element.rest,
-            date: Element.date,
-            isCredit: Element.iscredit,
-            isCheck: Element.is_check
-        })
-
-        try{
-            const order = await newOrder.save()
-            status = "done"           
-        } catch (err) {
-            status = err
+        const idCheck = await Product.findOne({ id: Element.server_id})
+        if (idCheck == null) {
+            const newOrder = new Order ({
+                appId: Element.id,
+                clientName: Element.client_name,
+                clientId: Element.client_id,
+                productListId: Element.product_list_id,
+                totalToPay: Element.total_to_pay,
+                verssi: Element.verssi,
+                rest: Element.rest,
+                date: Element.date,
+                isCredit: Element.iscredit,
+                isCheck: Element.is_check
+            })
+    
+            try{
+                const order = await newOrder.save()
+                status = "done"           
+            } catch (err) {
+                status = err
+            }
+        } else {
+            status = "done" 
         }
-        
         return status
     }
 
