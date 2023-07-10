@@ -344,7 +344,7 @@ router.post("/datapayments", async (req, res) => {
     async function insertData(Element) {
         var status = ""
         Element.server_id == "" ? idCheck = null : idCheck = await Payment.findById(Element.server_id)
-        console.log(Element.date);
+        
         if (idCheck != null) {
             status = "done"
         } else { 
