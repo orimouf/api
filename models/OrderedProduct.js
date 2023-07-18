@@ -49,7 +49,22 @@ const OrderedProductSchema = new mongoose.Schema(
         misso_q_u: { type: String, required: true },
         juliana_q_u: { type: String, required: true },
         bac_5_q_u: { type: String, required: true },
-        bac_6_q_u: { type: String, required: true }
+        bac_6_q_u: { type: String, required: true },
+        bf_210_q_u: { type: String, required: true },
+        bf_300_q_u: { type: String, required: true },
+        bf_330_q_u: { type: String, required: true },
+        bingo_premium_q_u: { type: String, required: true },
+        selection_q_u: { type: String, required: true },
+        cornito_prm_qty: { type: String, required: true },
+        cornito_prm_q_u: { type: String, required: true },
+        bingo_prm_qty: { type: String, required: true },
+        bingo_prm_q_u: { type: String, required: true },
+        mini_prm_qty: { type: String, required: true },
+        mini_prm_q_u: { type: String, required: true },
+        pot_prm_qty: { type: String, required: true },
+        pot_prm_q_u: { type: String, required: true },
+        bloom_prm_qty: { type: String, required: true },
+        bloom_prm_q_u: { type: String, required: true }
         
     },
     {timestamps: true}

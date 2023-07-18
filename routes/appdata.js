@@ -446,7 +446,22 @@ router.post("/dataorderproducts", async (req, res) => {
                 misso_q_u: Element.misso_q_u,
                 juliana_q_u: Element.juliana_q_u,
                 bac_5_q_u: Element.bac_5_q_u,
-                bac_6_q_u: Element.bac_6_q_u
+                bac_6_q_u: Element.bac_6_q_u,
+                bf_210_q_u: Element.bf_210_q_u,
+                bf_300_q_u: Element.bf_300_q_u,
+                bf_330_q_u: Element.bf_330_q_u,
+                bingo_premium_q_u: Element.bingo_premium_q_u,
+                selection_q_u: Element.selection_q_u,
+                cornito_prm_qty: Element.cornito_prm_qty,
+                cornito_prm_q_u: Element.cornito_prm_q_u,
+                bingo_prm_qty: Element.bingo_prm_qty,
+                bingo_prm_q_u: Element.bingo_prm_q_u,
+                mini_prm_qty: Element.mini_prm_qty,
+                mini_prm_q_u: Element.mini_prm_q_u,
+                pot_prm_qty: Element.pot_prm_qty,
+                pot_prm_q_u: Element.pot_prm_q_u,
+                bloom_prm_qty: Element.bloom_prm_qty,
+                bloom_prm_q_u: Element.bloom_prm_q_u
             })
         
             try{
