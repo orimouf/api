@@ -221,7 +221,7 @@ router.post("/dataproducts", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Product.findOne({ id: Element.server_id})
+        const idCheck = await Product.findOne({ appId: Element.id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
