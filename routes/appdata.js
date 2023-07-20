@@ -480,7 +480,20 @@ router.post("/dataorderproducts", async (req, res) => {
     }
 
     if (reutrnStatus == "done") {
-        res.status(201).json({ idObj })
+        if (idObj != null) {
+            try {
+                const updatedOrder = await Order.findByIdAndUpdate(idObj.orderId, 
+                    {
+                        productListId: Element.id
+                    },
+                    { new: true }
+                )
+
+                res.status(201).json({ idObj })
+            } catch (err) {
+                console.log(err);
+            }
+        }
     } else {
         res.status(500).json(reutrnStatus)
     }
