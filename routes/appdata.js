@@ -484,7 +484,7 @@ router.post("/dataorderproducts", async (req, res) => {
             try {
                 const updatedOrder = await Order.findByIdAndUpdate(idObj.orderId, 
                     {
-                        productListId: Element.id
+                        productListId: idObj.id
                     },
                     { new: true }
                 )
