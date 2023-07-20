@@ -466,6 +466,12 @@ router.post("/dataorderproducts", async (req, res) => {
         
             try{
                 const orderedProduct = await newOrderedProduct.save()
+                const updatedOrder = await Order.findByIdAndUpdate(orderedProduct.orderId, 
+                    {
+                        productListId: orderedProduct.id
+                    },
+                    { new: true }
+                )
                 idObj.push(orderedProduct)
                 status = "done"           
             } catch (err) {
@@ -480,20 +486,7 @@ router.post("/dataorderproducts", async (req, res) => {
     }
 
     if (reutrnStatus == "done") {
-        if (idObj != null) {
-            try {
-                const updatedOrder = await Order.findByIdAndUpdate(idObj.orderId, 
-                    {
-                        productListId: idObj.id
-                    },
-                    { new: true }
-                )
-
-                res.status(201).json({ idObj })
-            } catch (err) {
-                console.log(err);
-            }
-        }
+        res.status(201).json({ idObj })
     } else {
         res.status(500).json(reutrnStatus)
     }
