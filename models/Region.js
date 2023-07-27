@@ -2,7 +2,7 @@ const mongoose = require("mongoose")
 
 const RegionSchema = new mongoose.Schema(
     {
-        appId: { type: String, required: true, unique: true },
+        appId: { type: String, required: true, unique: false },
         regionName: { type: String, required: true, unique: true }
     },
     {timestamps: true}

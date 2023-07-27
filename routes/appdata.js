@@ -174,7 +174,6 @@ router.post("/dataregions", async (req, res) => {
     const dataFromApp = req.body.data
     var reutrnStatus
     var idCheck
-    console.log(dataFromApp);
  
     async function insertData(Element) {
         var status = ""
