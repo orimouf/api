@@ -70,14 +70,14 @@ router.post("/login", async (req, res) => {
         )
 
         const { password, ...info } = user._doc
-
-        res.status(200).json({
-            status: 1,
-            message: "Login Successful",
-            data: {
-                ...info, accessToken
-            }
-        })
+        res.status(200).json({...info, accessToken})
+        // res.status(200).json({
+        //     status: 1,
+        //     message: "Login Successful",
+        //     data: {
+        //         ...info, accessToken
+        //     }
+        // })
     } catch(err) {
         res.status(500).json(err)
     }
