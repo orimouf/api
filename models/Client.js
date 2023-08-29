@@ -13,6 +13,7 @@ const ClientSchema = new mongoose.Schema(
         isPromo: { type: Boolean, default: false },
         creditBon: { type: String, default: "" },
         lastServe: { type: String, required: true },
+        camion: { type: String, required: true }
     },
     {timestamps: true}
 )

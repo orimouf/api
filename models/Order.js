@@ -10,6 +10,7 @@ const OrderSchema = new mongoose.Schema(
         verssi: { type: String, required: true },
         rest: { type: String, required: true },
         date: { type: String, required: true },
+        camion: { type: String, required: true },
         isCheck: { type: Boolean, default: false },
         isCredit: { type: Boolean, default: false }
     },
