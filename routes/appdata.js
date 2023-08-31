@@ -38,6 +38,7 @@ router.post("/dataclients", async (req, res) => {
                             isCredit: is_credit,
                             isFrigo: is_frigo,
                             isPromo: is_promo,
+                            camion: Element.camion,
                             creditBon: Element.credit_bon,
                             lastServe: Element.last_serve
                         },
@@ -61,6 +62,7 @@ router.post("/dataclients", async (req, res) => {
                 isCredit: is_credit,
                 isFrigo: is_frigo,
                 isPromo: is_promo,
+                camion: Element.camion,
                 creditBon: Element.credit_bon,
                 lastServe: Element.last_serve
             })
@@ -306,6 +308,7 @@ router.post("/dataorders", async (req, res) => {
                 verssi: Element.verssi,
                 rest: Element.rest,
                 date: Element.date,
+                camion: Element.camion,
                 isCredit: Element.iscredit,
                 isCheck: Element.is_check
             })
@@ -357,6 +360,7 @@ router.post("/datapayments", async (req, res) => {
                 verssi: Element.verssi,
                 rest: Element.rest,
                 date: Element.date,
+                camion: Element.camion,
                 isCheck: Element.is_check
             })
 
