@@ -290,9 +290,10 @@ router.post("/dataorders", async (req, res) => {
     const dataFromApp = req.body.data
     var idCheck
     var idObj = []
-    var reutrnStatus
+    var ordersStatus
+    var orderedProductStatus
     
-    async function insertData(Element) {
+    async function insertOrdersData(Element) {
         var status = ""
         Element.server_id == "" ? idCheck = null : idCheck = await Order.findById(Element.server_id)
         
@@ -324,17 +325,105 @@ router.post("/dataorders", async (req, res) => {
         return status
     }
 
-    for (let i = 0; i < dataFromApp.length; i++) {
-        console.log(dataFromApp[i])
-        console.log(dataFromApp[i].orderedProduct)
-        console.log(dataFromApp[i].orders)
-        // reutrnStatus = await insertData(dataFromApp[i].orders)
+    async function insertOrderedProductData(Element) {
+        var status = ""
+        Element.server_id == "" ? idCheck = null : idCheck = await OrderedProduct.findById(Element.server_id)
+        
+        if (idCheck != null) {
+            status = "done"
+        } else { 
+            const newOrderedProduct = new OrderedProduct ({
+                appId: Element.id,
+                orderId: Element.orderId,
+                mini_qty: Element.mini_qty,
+                mini_q_u: Element.mini_q_u,
+                trio_qty: Element.trio_qty,
+                trio_q_u: Element.trio_q_u,
+                solo_qty: Element.solo_qty,
+                solo_q_u: Element.solo_q_u,
+                pot_qty: Element.pot_qty,
+                pot_q_u: Element.pot_q_u,
+                gini_qty: Element.gini_qty,
+                gini_q_u: Element.gini_q_u,
+                big_qty: Element.big_qty,
+                big_q_u: Element.big_q_u,
+                cornito_4_qty: Element.cornito_4_qty,
+                cornito_4_q_u: Element.cornito_4_q_u,
+                cornito_5_qty: Element.cornito_5_qty,
+                cornito_5_q_u: Element.cornito_5_q_u,
+                cornito_g_qty: Element.cornito_g_qty,
+                cornito_g_q_u: Element.cornito_g_q_u,
+                gofrito_qty: Element.gofrito_qty,
+                gofrito_q_u: Element.gofrito_q_u,
+                pot_v_qty: Element.pot_v_qty,
+                pot_v_q_u: Element.pot_v_q_u,
+                g8_qty: Element.g8_qty,
+                g8_q_u: Element.g8_q_u,
+                gold_qty: Element.gold_qty,
+                gold_q_u: Element.gold_q_u,
+                skiper_qty: Element.skiper_qty,
+                skiper_q_u: Element.skiper_q_u,
+                scobido_qty: Element.scobido_qty,
+                scobido_q_u: Element.scobido_q_u,
+                mini_scobido_qty: Element.mini_scobido_qty,
+                mini_scobido_q_u: Element.mini_scobido_q_u,
+                venezia_qty: Element.venezia_qty,
+                venezia_q_u: Element.venezia_q_u,
+                bf_400_q_u: Element.bf_400_q_u,
+                bf_250_q_u: Element.bf_250_q_u,
+                bf_230_q_u: Element.bf_230_q_u,
+                bf_200_q_u: Element.bf_200_q_u,
+                bf_150_q_u: Element.bf_150_q_u,
+                buch_q_u: Element.buch_q_u,
+                tarte_q_u: Element.tarte_q_u,
+                mosta_q_u: Element.mosta_q_u,
+                misso_q_u: Element.misso_q_u,
+                juliana_q_u: Element.juliana_q_u,
+                bac_5_q_u: Element.bac_5_q_u,
+                bac_6_q_u: Element.bac_6_q_u,
+                bf_210_q_u: Element.bf_210_q_u,
+                bf_300_q_u: Element.bf_300_q_u,
+                bf_330_q_u: Element.bf_330_q_u,
+                bingo_premium_q_u: Element.bingo_premium_q_u,
+                selection_q_u: Element.selection_q_u,
+                cornito_prm_qty: Element.cornito_prm_qty,
+                cornito_prm_q_u: Element.cornito_prm_q_u,
+                bingo_prm_qty: Element.bingo_prm_qty,
+                bingo_prm_q_u: Element.bingo_prm_q_u,
+                mini_prm_qty: Element.mini_prm_qty,
+                mini_prm_q_u: Element.mini_prm_q_u,
+                pot_prm_qty: Element.pot_prm_qty,
+                pot_prm_q_u: Element.pot_prm_q_u,
+                bloom_prm_qty: Element.bloom_prm_qty,
+                bloom_prm_q_u: Element.bloom_prm_q_u
+            })
+        
+            try{
+                const orderedProduct = await newOrderedProduct.save()
+                const updatedOrder = await Order.findByIdAndUpdate(orderedProduct.orderId, 
+                    {
+                        productListId: orderedProduct.id
+                    },
+                    { new: true }
+                )
+                idObj.push(orderedProduct)
+                status = "done"           
+            } catch (err) {
+                status = err
+            }
+        }
+        return status
     }
 
-    if (reutrnStatus == "done") {
-        res.status(201).json({ idObj })
+    for (let i = 0; i < dataFromApp.length; i++) {
+        ordersStatus = await insertOrdersData(dataFromApp[i].orders)
+        orderedProductStatus = await insertOrderedProductData(dataFromApp[i].orderedProduct)
+    }
+
+    if (ordersStatus == "done" && orderedProductStatus == "done") {
+        res.status(201).json("Success")
     } else {
-        res.status(500).json(reutrnStatus)
+        res.status(500).json(ordersStatus)
     }
     
 })
