@@ -293,39 +293,7 @@ router.post("/dataorders", async (req, res) => {
     var ordersStatus
     var orderedProductStatus
     
-    async function insertOrdersData(Element) {
-        var status = ""
-        Element.server_id == "" ? idCheck = null : idCheck = await Order.findById(Element.server_id)
-        
-        if (idCheck != null) {
-            status = "done"
-        } else { 
-            const newOrder = new Order ({
-                appId: Element.id,
-                clientName: Element.client_name,
-                clientId: Element.client_id,
-                productListId: Element.product_list_id,
-                totalToPay: Element.total_to_pay,
-                verssi: Element.verssi,
-                rest: Element.rest,
-                date: Element.date,
-                camion: Element.camion,
-                isCredit: Element.iscredit,
-                isCheck: Element.is_check
-            })
-    
-            try{
-                const order = await newOrder.save()
-                idObj.push(order)
-                status = "done"         
-            } catch (err) {
-                status = err
-            }
-        }
-        return status
-    }
-
-    async function insertOrderedProductData(Element) {
+    async function insertOrderedProductData(Element, newOrderID) {
         var status = ""
         Element.server_id == "" ? idCheck = null : idCheck = await OrderedProduct.findById(Element.server_id)
         
@@ -334,7 +302,7 @@ router.post("/dataorders", async (req, res) => {
         } else { 
             const newOrderedProduct = new OrderedProduct ({
                 appId: Element.id,
-                orderId: Element.orderId,
+                orderId: newOrderID,
                 mini_qty: Element.mini_qty,
                 mini_q_u: Element.mini_q_u,
                 trio_qty: Element.trio_qty,
@@ -400,7 +368,7 @@ router.post("/dataorders", async (req, res) => {
         
             try{
                 const orderedProduct = await newOrderedProduct.save()
-                const updatedOrder = await Order.findByIdAndUpdate(orderedProduct.orderId, 
+                const updatedOrder = await Order.findByIdAndUpdate(newOrderID, 
                     {
                         productListId: orderedProduct.id
                     },
@@ -415,9 +383,44 @@ router.post("/dataorders", async (req, res) => {
         return status
     }
 
+    async function insertOrdersData(OrderElement, ProductList) {
+        var status = ""
+        OrderElement.server_id == "" ? idCheck = null : idCheck = await Order.findById(OrderElement.server_id)
+        
+        if (idCheck != null) {
+            status = "done"
+        } else { 
+            const newOrder = new Order ({
+                appId: OrderElement.id,
+                clientName: OrderElement.client_name,
+                clientId: OrderElement.client_id,
+                productListId: OrderElement.product_list_id,
+                totalToPay: OrderElement.total_to_pay,
+                verssi: OrderElement.verssi,
+                rest: OrderElement.rest,
+                date: OrderElement.date,
+                camion: OrderElement.camion,
+                isCredit: OrderElement.iscredit,
+                isCheck: OrderElement.is_check
+            })
+    
+            try{
+                const order = await newOrder.save()
+                idObj.push(order)
+                         
+                orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
+                status = "done"
+            } catch (err) {
+                status = err
+            }
+        }
+        return status
+    }
+
+    
+
     for (let i = 0; i < dataFromApp.length; i++) {
-        ordersStatus = await insertOrdersData(dataFromApp[i].orders[0])
-        orderedProductStatus = await insertOrderedProductData(dataFromApp[i].orderedProduct[0])
+        ordersStatus = await insertOrdersData(dataFromApp[i].orders[0], dataFromApp[i].orderedProduct[0])
     }
 
     if (ordersStatus == "done" && orderedProductStatus == "done") {
