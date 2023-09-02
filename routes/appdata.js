@@ -289,7 +289,8 @@ router.post("/dataorders", async (req, res) => {
 
     const dataFromApp = req.body.data
     var idCheck
-    var idObj = []
+    var returnOrder = []
+    var returnProductList = []
     var ordersStatus
     var orderedProductStatus
     
@@ -374,7 +375,7 @@ router.post("/dataorders", async (req, res) => {
                     },
                     { new: true }
                 )
-                idObj.push(orderedProduct)
+                returnProductList.push(orderedProduct)
                 status = "done"           
             } catch (err) {
                 status = err
@@ -406,7 +407,7 @@ router.post("/dataorders", async (req, res) => {
     
             try{
                 const order = await newOrder.save()
-                idObj.push(order)
+                returnOrder.push(order)
                          
                 orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
                 status = "done"
@@ -417,14 +418,12 @@ router.post("/dataorders", async (req, res) => {
         return status
     }
 
-    
-
     for (let i = 0; i < dataFromApp.length; i++) {
         ordersStatus = await insertOrdersData(dataFromApp[i].orders[0], dataFromApp[i].orderedProduct[0])
     }
 
     if (ordersStatus == "done" && orderedProductStatus == "done") {
-        res.status(201).json("Success")
+        res.status(201).json({ returnOrder, returnProductList})
     } else {
         res.status(500).json(ordersStatus)
     }
