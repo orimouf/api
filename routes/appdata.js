@@ -416,8 +416,8 @@ router.post("/dataorders", async (req, res) => {
     }
 
     for (let i = 0; i < dataFromApp.length; i++) {
-        ordersStatus = await insertOrdersData(dataFromApp[i].orders)
-        orderedProductStatus = await insertOrderedProductData(dataFromApp[i].orderedProduct)
+        ordersStatus = await insertOrdersData(dataFromApp[i].orders[0])
+        orderedProductStatus = await insertOrderedProductData(dataFromApp[i].orderedProduct[0])
     }
 
     if (ordersStatus == "done" && orderedProductStatus == "done") {
