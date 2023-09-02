@@ -325,7 +325,10 @@ router.post("/dataorders", async (req, res) => {
     }
 
     for (let i = 0; i < dataFromApp.length; i++) {
-        reutrnStatus = await insertData(dataFromApp[i])
+        console.log(dataFromApp[i])
+        console.log(dataFromApp[i].orderedProduct)
+        console.log(dataFromApp[i].orders)
+        // reutrnStatus = await insertData(dataFromApp[i].orders)
     }
 
     if (reutrnStatus == "done") {
