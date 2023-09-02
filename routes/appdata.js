@@ -375,7 +375,9 @@ router.post("/dataorders", async (req, res) => {
                     },
                     { new: true }
                 )
-                returnProductList.push(orderedProduct)
+                returnProductList.push(orderedProduct._id)
+                returnProductList.push(orderedProduct.appId)
+
                 status = "done"           
             } catch (err) {
                 status = err
@@ -407,7 +409,8 @@ router.post("/dataorders", async (req, res) => {
     
             try{
                 const order = await newOrder.save()
-                returnOrder.push(order)
+                returnOrder.push(order._id)
+                returnOrder.push(order.appId)
                          
                 orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
                 status = "done"
