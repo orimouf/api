@@ -289,8 +289,9 @@ router.post("/dataorders", async (req, res) => {
 
     const dataFromApp = req.body.data
     var idCheck
-    // var idObj = []
-    var serverID = ""
+    var serverOrderID = ""
+    var serverProductListID = ""
+    var appID = ""
     var ordersStatus
     var orderedProductStatus
     
@@ -375,7 +376,7 @@ router.post("/dataorders", async (req, res) => {
                     },
                     { new: true }
                 )
-                // idObj.push(orderedProduct)
+                serverProductListID = orderedProduct._id
 
                 status = "done"           
             } catch (err) {
@@ -409,7 +410,8 @@ router.post("/dataorders", async (req, res) => {
             try{
                 const order = await newOrder.save()
                 // idObj.push(order)
-                serverID = order._id         
+                serverOrderID = order._id   
+                appID = order.appId      
                 orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
                 status = "done"
             } catch (err) {
@@ -426,9 +428,11 @@ router.post("/dataorders", async (req, res) => {
     if (ordersStatus == "done" && orderedProductStatus == "done") {
         res.status(201).json({
                 status: 1,
-                message: "Login Successful",
+                message: "Orders Up To Server Successfully",
                 data: {
-                    "orderID" : serverID,
+                    "orderID" : serverOrderID,
+                    "productListID" : serverProductListID,
+                    "appID" : appID
                 }
             })
     } else {
