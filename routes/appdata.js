@@ -430,9 +430,9 @@ router.post("/dataorders", async (req, res) => {
                 status: 1,
                 message: "Orders Up To Server Successfully",
                 data: {
-                    "orderID" : serverOrderID,
-                    "productListID" : serverProductListID,
-                    "appID" : appID
+                    orderID : serverOrderID,
+                    productListID : serverProductListID,
+                    appID : appID
                 }
             })
     } else {
