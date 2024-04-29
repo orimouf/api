@@ -58,7 +58,7 @@ router.get("/find/:id", async (req, res) => {
 })
 
 //GET ALL
-router.get("/camion01/", async (req, res) => {
+router.get("/", async (req, res) => {
     const query = req.query.new
     // if(req.user.isAdmin) {
         try {
