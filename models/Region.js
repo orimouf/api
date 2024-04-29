@@ -3,7 +3,8 @@ const mongoose = require("mongoose")
 const RegionSchema = new mongoose.Schema(
     {
         appId: { type: String, required: true, unique: false },
-        regionName: { type: String, required: true, unique: true }
+        regionName: { type: String, required: true, unique: true },
+        camion: { type: String, required: true }
     },
     {timestamps: true}
 )
