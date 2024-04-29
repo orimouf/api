@@ -64,7 +64,7 @@ router.get("/camion01/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             // const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()
-            const clients = await Client.find({}, { projection: { camion: "CAMION 01" } })
+            const clients = await Client.find({camion: "CAMION 01" })
             res.status(200).json({ clients })
         } catch (err) {
             res.status(500).json(err)
@@ -79,7 +79,7 @@ router.get("/camion02/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             // const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()
-            const clients = await Client.find({}, { projection: { camion: "CAMION 02" } })
+            const clients = await Client.find({camion: "CAMION 02" })
             res.status(200).json({ clients })
         } catch (err) {
             res.status(500).json(err)
