@@ -59,13 +59,27 @@ router.get("/find/:id", async (req, res) => {
 
 //GET ALL
 
-router.get("/", async (req, res) => {
+router.get("/camion01/", async (req, res) => {
     const query = req.query.new
-    const camion = req.body
     // if(req.user.isAdmin) {
         try {
             // const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()
-            const clients = await Client.find({}, { projection: { camion: camion } })
+            const clients = await Client.find({}, { projection: { camion: "CAMION 01" } })
+            res.status(200).json({ clients })
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    // } else {
+    //     res.status(500).json("you are not allowed to see all clients!")
+    // }
+})
+
+router.get("/camion02/", async (req, res) => {
+    const query = req.query.new
+    // if(req.user.isAdmin) {
+        try {
+            // const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()
+            const clients = await Client.find({}, { projection: { camion: "CAMION 02" } })
             res.status(200).json({ clients })
         } catch (err) {
             res.status(500).json(err)
