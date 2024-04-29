@@ -61,9 +61,11 @@ router.get("/find/:id", async (req, res) => {
 
 router.get("/", async (req, res) => {
     const query = req.query.new
+    const camion = req.body
     // if(req.user.isAdmin) {
         try {
-            const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()
+            // const clients = query ? await Client.find().sort({_id: -1}).limit(10) : await Client.find()
+            const clients = await Client.find({}, { projection: { camion: camion } })
             res.status(200).json({ clients })
         } catch (err) {
             res.status(500).json(err)
