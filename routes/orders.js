@@ -94,19 +94,20 @@ router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             // const orders = await Order.find()
+            const orders = await OrderedProduct.findById("66318acba63f38c555afbb52").populate('orders');
 
-            OrderedProduct.aggregate([{
-                $lookup: {
-                    from: "orders", // collection name in db
-                    localField: "orderId",
-                    foreignField: "_id",
-                    as: "order"
-                }
-            }]).exec(function(err, orders) {
-                // students contain WorksnapsTimeEntries
-                res.status(200).json({ orders })
-            });
-
+            // OrderedProduct.aggregate([{
+            //     $lookup: {
+            //         from: "orders", // collection name in db
+            //         localField: "orderId",
+            //         foreignField: "_id",
+            //         as: "order"
+            //     }
+            // }]).exec(function(err, orders) {
+            //     // students contain WorksnapsTimeEntries
+            //     res.status(200).json({ orders })
+            // });
+            res.status(200).json({ orders })
             
         } catch (err) {
             res.status(500).json(err)
