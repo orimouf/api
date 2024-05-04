@@ -96,11 +96,9 @@ router.get("/withproductlist/", async (req, res) => {
             
 
             orderedProducts.map( async item => {
-                const { ...info } = item._doc
                 const list = await OrderedProduct.findById(item.productListId)
-                item.productListId = list
+                item.concat(list)
 
-                return { ...info, list }
             })
             
             
