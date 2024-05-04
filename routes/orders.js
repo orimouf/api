@@ -94,7 +94,7 @@ router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             // const orders = await Order.find()
-            const orders = await OrderedProduct.findById("66318acba63f38c555afbb52").populate('orders');
+            const orders = await Order.findById("66318acca63f38c555afbb58").populate('orderedproducts');
 
             // OrderedProduct.aggregate([{
             //     $lookup: {
