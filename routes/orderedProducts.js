@@ -97,8 +97,8 @@ router.get("/withproductlist/", async (req, res) => {
 
             orderedProducts.map( async item => {
                 const list = await OrderedProduct.findById(item.productListId)
-                item.concat(list)
-
+                const mergedObject = Object.assign({}, item, list);
+                return mergedObject
             })
             
             
