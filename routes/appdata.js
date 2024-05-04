@@ -380,9 +380,7 @@ router.post("/dataorders", async (req, res) => {
                     },
                     { new: true }
                 )
-                serverProductListID = {
-                    "$oid": orderedProduct.id
-                  }
+                serverProductListID = orderedProduct.id
 
                 status = "done"           
             } catch (err) {
@@ -418,9 +416,7 @@ router.post("/dataorders", async (req, res) => {
             try{
                 const order = await newOrder.save()
                 // idObj.push(order)
-                serverOrderID = {
-                    "$oid": order._id
-                  }   
+                serverOrderID = order._id   
                 appID = order.appId      
                 orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
                 status = "done"
