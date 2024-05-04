@@ -304,7 +304,7 @@ router.post("/dataorders", async (req, res) => {
         } else { 
             const newOrderedProduct = new OrderedProduct ({
                 appId: Element.id,
-                orderId: newOrderID,
+                orderId: new mongoose.mongo.ObjectId(newOrderID),
                 mini_qty: Element.mini_qty,
                 mini_q_u: Element.mini_q_u,
                 trio_qty: Element.trio_qty,
@@ -396,7 +396,7 @@ router.post("/dataorders", async (req, res) => {
             const newOrder = new Order ({
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
-                clientId: OrderElement.client_id,
+                clientId: new mongoose.mongo.ObjectId(OrderElement.client_id),
                 productListId: OrderElement.product_list_id,
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
