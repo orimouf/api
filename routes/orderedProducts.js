@@ -55,7 +55,7 @@ router.delete("/:id", verify, async (req, res) => {
 
 //GET
 
-router.get("/find/:id", verify, async (req, res) => {
+router.get("/find/:id", async (req, res) => {
     try {
         const orderedProduct = await OrderedProduct.findById(req.params.id)
         res.status(200).json(orderedProduct)
