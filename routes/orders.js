@@ -95,12 +95,12 @@ router.get("/", async (req, res) => {
         try {
             // const orders = await Order.find()
 
-            OrderedProduct.aggregate([{
+            Order.aggregate([{
                 $lookup: {
-                    from: "orders", // collection name in db
-                    localField: "orderId",
+                    from: "orderedproducts", // collection name in db
+                    localField: "productListId",
                     foreignField: "_id",
-                    as: "order"
+                    as: "ordered"
                 }
             }]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
