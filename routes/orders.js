@@ -93,6 +93,18 @@ router.get("/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             const orders = await Order.find()
+
+            Order.aggregate([{
+                $lookup: {
+                    from: "orderedproducts", // collection name in db
+                    localField: "productListId",
+                    foreignField: "_id",
+                    as: "order"
+                }
+            }]).exec(function(err, students) {
+                // students contain WorksnapsTimeEntries
+            });
+
             res.status(200).json({ orders })
         } catch (err) {
             res.status(500).json(err)
