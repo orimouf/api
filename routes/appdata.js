@@ -397,8 +397,8 @@ router.post("/dataorders", async (req, res) => {
             const newOrder = new Order ({
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
-                clientId: new mongoose.mongo.ObjectId(OrderElement.client_id),
-                productListId: OrderElement.product_list_id,
+                clientId: OrderElement.client_id,
+                productListId: new mongoose.mongo.ObjectId(OrderElement.product_list_id),
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
                 rest: OrderElement.rest,

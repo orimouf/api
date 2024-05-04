@@ -88,9 +88,9 @@ router.get("/random", verify, async (req, res) => {
     }
 })
 
-//GET ALL
+//GET ALL orders AND orderedProduct JOIN
 
-router.get("/", async (req, res) => {
+router.get("/ordresJoin/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             // const orders = await Order.find()
@@ -100,13 +100,28 @@ router.get("/", async (req, res) => {
                     from: "orderedproducts", // collection name in db
                     localField: "productListId",
                     foreignField: "_id",
-                    as: "ordered"
+                    as: "productsOrdered"
                 }
             }]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
                 res.status(200).json({ orders })
             });
             
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
+})
+
+//GET ALL
+
+router.get("/", async (req, res) => {
+    // if(req.user.isAdmin) {
+        try {
+            const orders = await Order.find()
+            res.status(200).json({ orders })
         } catch (err) {
             res.status(500).json(err)
         }

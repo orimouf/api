@@ -87,30 +87,6 @@ router.get("/random", verify, async (req, res) => {
     }
 })
 
-//GET ALL WITH PRODUCTS ORDERED
-
-router.get("/withproductlist/", async (req, res) => {
-    // if(req.user.isAdmin) {
-        try {
-            const orderedProducts = await OrderedProduct.find()
-            
-
-            orderedProducts.map( async item => {
-                const list = await OrderedProduct.findById(item.productListId)
-                const mergedObject = Object.assign({}, item, list);
-                return mergedObject
-            })
-            
-            
-            res.status(200).json({ orderedProducts })
-        } catch (err) {
-            res.status(500).json(err)
-        }
-    // } else {
-    //     res.status(500).json("you are not allowed!")
-    // }
-})
-
 //GET ALL
 
 router.get("/", async (req, res) => {
