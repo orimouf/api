@@ -304,9 +304,7 @@ router.post("/dataorders", async (req, res) => {
         } else { 
             const newOrderedProduct = new OrderedProduct ({
                 appId: Element.id,
-                orderId: {
-                    "$oid": newOrderID
-                  },
+                orderId: newOrderID,
                 mini_qty: Element.mini_qty,
                 mini_q_u: Element.mini_q_u,
                 trio_qty: Element.trio_qty,
@@ -374,9 +372,7 @@ router.post("/dataorders", async (req, res) => {
                 const orderedProduct = await newOrderedProduct.save()
                 const updatedOrder = await Order.findByIdAndUpdate(newOrderID, 
                     {
-                        productListId: {
-                            "$oid": orderedProduct.id
-                          }
+                        productListId: orderedProduct.id
                     },
                     { new: true }
                 )
@@ -401,9 +397,7 @@ router.post("/dataorders", async (req, res) => {
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
                 clientId: OrderElement.client_id,
-                productListId: {
-                    "$oid": OrderElement.product_list_id
-                  },
+                productListId: OrderElement.product_list_id,
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
                 rest: OrderElement.rest,
