@@ -5,7 +5,7 @@ const OrderSchema = new mongoose.Schema(
         appId: { type: String, required: true },
         clientName: { type: String, required: true },
         clientId: { type: String, required: true },
-        productListId: { type: String, required: true },
+        productListId: { type: Object, required: true },
         totalToPay: { type: String, required: true },
         verssi: { type: String, required: true },
         rest: { type: String, required: true },
