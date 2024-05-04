@@ -373,7 +373,7 @@ router.post("/dataorders", async (req, res) => {
                 const orderedProduct = await newOrderedProduct.save()
                 const updatedOrder = await Order.findByIdAndUpdate(newOrderID, 
                     {
-                        productListId: orderedProduct.id
+                        productListId: new mongoose.mongo.ObjectId(orderedProduct.id)
                     },
                     { new: true }
                 )
