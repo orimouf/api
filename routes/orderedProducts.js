@@ -93,13 +93,17 @@ router.get("/withproductlist/", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             const orderedProducts = await OrderedProduct.find()
-            // const { productListId, ...info } = orderedProducts._doc
+            
 
             orderedProducts.map( async item => {
-                const orderedProduct = await OrderedProduct.findById(item.productListId)
-                item.productListId = orderedProduct
-            })
+                const { ...info } = item._doc
+                const list = await OrderedProduct.findById(item.productListId)
+                item.productListId = list
 
+                return { ...info, list }
+            })
+            
+            
             res.status(200).json({ orderedProducts })
         } catch (err) {
             res.status(500).json(err)
