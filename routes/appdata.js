@@ -304,7 +304,9 @@ router.post("/dataorders", async (req, res) => {
         } else { 
             const newOrderedProduct = new OrderedProduct ({
                 appId: Element.id,
-                orderId: newOrderID,
+                orderId: {
+                    "$oid": newOrderID
+                  },
                 mini_qty: Element.mini_qty,
                 mini_q_u: Element.mini_q_u,
                 trio_qty: Element.trio_qty,
@@ -372,11 +374,15 @@ router.post("/dataorders", async (req, res) => {
                 const orderedProduct = await newOrderedProduct.save()
                 const updatedOrder = await Order.findByIdAndUpdate(newOrderID, 
                     {
-                        productListId: orderedProduct.id
+                        productListId: {
+                            "$oid": orderedProduct.id
+                          }
                     },
                     { new: true }
                 )
-                serverProductListID = orderedProduct._id
+                serverProductListID = {
+                    "$oid": orderedProduct.id
+                  }
 
                 status = "done"           
             } catch (err) {
@@ -397,7 +403,9 @@ router.post("/dataorders", async (req, res) => {
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
                 clientId: OrderElement.client_id,
-                productListId: OrderElement.product_list_id,
+                productListId: {
+                    "$oid": OrderElement.product_list_id
+                  },
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
                 rest: OrderElement.rest,
@@ -410,7 +418,9 @@ router.post("/dataorders", async (req, res) => {
             try{
                 const order = await newOrder.save()
                 // idObj.push(order)
-                serverOrderID = order._id   
+                serverOrderID = {
+                    "$oid": order._id
+                  }   
                 appID = order.appId      
                 orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
                 status = "done"

@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Order = require("../models/Order")
+const OrderedProduct = require("../models/OrderedProduct")
 const verify = require("../verifyToken")
 
 // CREATE
@@ -94,10 +95,10 @@ router.get("/", async (req, res) => {
         try {
             // const orders = await Order.find()
 
-            Order.aggregate([{
+            OrderedProduct.aggregate([{
                 $lookup: {
-                    from: "orderedproducts", // collection name in db
-                    localField: "productListId",
+                    from: "orders", // collection name in db
+                    localField: "orderId",
                     foreignField: "_id",
                     as: "order"
                 }
