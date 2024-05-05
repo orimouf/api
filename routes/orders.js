@@ -1,6 +1,6 @@
 const router = require("express").Router()
 const Order = require("../models/Order")
-const OrderedProduct = require("../models/OrderedProduct")
+const Client = require("../models/Client")
 const verify = require("../verifyToken")
 
 // CREATE
@@ -104,7 +104,14 @@ router.get("/ordresJoin/", async (req, res) => {
                 }
             }]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
-                res.status(200).json({ orders })
+                let arr = []
+                Promise.all(orders.map( async order => {
+                    const client = await Client.findOne({ "appId": order.clientId})
+                    order.clientPrices = client.prices
+                })).then(results => res.status(200).json({ orders }));
+
+                
+                
             });
             
         } catch (err) {
