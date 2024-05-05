@@ -110,8 +110,6 @@ router.get("/ordresJoin/", async (req, res) => {
                     order.clientPrices = client.prices
                 })).then(results => res.status(200).json({ orders }));
 
-                
-                
             });
             
         } catch (err) {
