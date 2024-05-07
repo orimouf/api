@@ -2,6 +2,7 @@ const router = require("express").Router()
 const User = require("../models/User")
 const Client = require("../models/Client")
 const Region = require("../models/Region")
+const Fees = require("../models/Fees")
 const Product = require("../models/Product")
 const Order = require("../models/Order")
 const OrderedProduct = require("../models/OrderedProduct")
@@ -187,7 +188,8 @@ router.post("/dataregions", async (req, res) => {
         } else {
             const newRegion = new Region ({
                 appId: Element.id,
-                regionName: Element.region_name
+                regionName: Element.region_name,
+                camion: Element.camion
             })
     
             try{
@@ -209,6 +211,56 @@ router.post("/dataregions", async (req, res) => {
         res.status(201).json({
             status: 1,
             message: "Regions data save Successful",
+        })
+    } else {
+        res.status(500).json(reutrnStatus)
+    }
+    
+})
+
+//SET DATA REGIONS
+router.post("/datafees", async (req, res) => {
+
+    const dataFromApp = req.body.data
+    var reutrnStatus
+    var idCheck
+ 
+    async function insertData(Element) {
+        var status = ""
+        Element.server_id == "" ? idCheck = null : idCheck = await Fees.findById(Element.server_id)
+       
+        if (idCheck != null) {
+            status = "done"
+        } else {
+            const newFees = new Fees ({
+                appId: Element.id,
+                DieselFees: Element.diesel_fees,
+                MealFees: Element.meal_fees,
+                OtherCostsSum: Element.other_costs_sum,
+                DescriptionFees: Element.description_fees,
+                date: Element.date,
+                camion: Element.camion
+            })
+    
+            try{
+                const fees = await newFees.save()
+                status = "done"           
+            } catch (err) {
+                status = err
+            }
+        }
+        return status
+    }
+
+    for (let i = 0; i < dataFromApp.length; i++) {
+        const Element = dataFromApp[i]
+        reutrnStatus = await insertData(Element)
+    }
+
+    if (reutrnStatus == "done") {
+        res.status(201).json({
+            status: 1,
+            message: "Fees data save Successful",
         })
     } else {
         res.status(500).json(reutrnStatus)
