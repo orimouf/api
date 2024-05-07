@@ -40,17 +40,17 @@ router.put("/:id", verify, async (req, res) => {
 
 //DELETE
 
-router.delete("/:id", verify, async (req, res) => {
-    if(req.user.isAdmin) {
+router.delete("/:id", async (req, res) => {
+    // if(req.user.isAdmin) {
         try {
             await OrderedProduct.findByIdAndDelete(req.params.id)
             res.status(200).json("The OrderedProduct has been deleted...")
         } catch (err) {
             res.status(500).json(err)
         }
-    } else {
-        res.status(500).json("you are not allowed!")
-    }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
 })
 
 //GET
