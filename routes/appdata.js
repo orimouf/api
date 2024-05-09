@@ -447,12 +447,11 @@ router.post("/dataorders", async (req, res) => {
         if (idCheck != null) {
             status = "done"
         } else { 
-            const ObjectIdProductList = new mongoose.mongo.ObjectId(serverProductListID)
             const newOrder = new Order ({
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
                 clientId: OrderElement.client_id,
-                productListId: ObjectIdProductList,
+                productListId: OrderElement.productListId,
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
                 rest: OrderElement.rest,
