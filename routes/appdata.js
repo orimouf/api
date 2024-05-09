@@ -341,7 +341,6 @@ router.post("/dataproducts", async (req, res) => {
 router.post("/dataorders", async (req, res) => {
 
     const dataFromApp = req.body.data
-    console.log(dataFromApp);
     var idCheck
     var serverOrderID = ""
     var serverProductListID = ""
