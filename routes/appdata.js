@@ -476,7 +476,7 @@ router.post("/dataorders", async (req, res) => {
     }
 
     for (let i = 0; i < dataFromApp.length; i++) {
-        ordersStatus = await insertOrdersData(dataFromApp[i].orders[0], dataFromApp[i].orderedProduct[0])
+        ordersStatus = await insertOrdersData(dataFromApp[i].orders[0], dataFromApp[i].orderedProduct[0]).catch(err => {console.log(err);})
     }
 
     if (ordersStatus == "done" && orderedProductStatus == "done") {
