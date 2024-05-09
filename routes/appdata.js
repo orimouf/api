@@ -451,7 +451,7 @@ router.post("/dataorders", async (req, res) => {
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
                 clientId: OrderElement.client_id,
-                productListId: OrderElement.productListId,
+                productListId: OrderElement.product_list_id,
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
                 rest: OrderElement.rest,
