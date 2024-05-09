@@ -447,11 +447,12 @@ router.post("/dataorders", async (req, res) => {
         if (idCheck != null) {
             status = "done"
         } else { 
+            const ObjectIdProductList = new mongoose.mongo.ObjectId(serverProductListID)
             const newOrder = new Order ({
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
                 clientId: OrderElement.client_id,
-                productListId: new mongoose.mongo.ObjectId(OrderElement.product_list_id),
+                productListId: ObjectIdProductList,
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
                 rest: OrderElement.rest,
@@ -467,6 +468,13 @@ router.post("/dataorders", async (req, res) => {
                 serverOrderID = order._id   
                 appID = order.appId      
                 orderedProductStatus = await insertOrderedProductData(ProductList, order._id)
+                const ObjectIdProductList = new mongoose.mongo.ObjectId(serverProductListID)
+                const updatedOrder = await Order.findByIdAndUpdate(serverOrderID, 
+                    {
+                        productListId: ObjectIdProductList
+                    },
+                    { new: true }
+                )
                 status = "done"
             } catch (err) {
                 status = err
@@ -476,7 +484,7 @@ router.post("/dataorders", async (req, res) => {
     }
 
     for (let i = 0; i < dataFromApp.length; i++) {
-        ordersStatus = await insertOrdersData(dataFromApp[i].orders[0], dataFromApp[i].orderedProduct[0]).catch(err => {console.log(err);})
+        ordersStatus = await insertOrdersData(dataFromApp[0].orders[0], dataFromApp[0].orderedProduct[0]).catch(err => {console.log(err);})
     }
 
     if (ordersStatus == "done" && orderedProductStatus == "done") {
