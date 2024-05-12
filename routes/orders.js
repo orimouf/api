@@ -106,7 +106,7 @@ router.get("/ordresJoin/", async (req, res) => {
                 // students contain WorksnapsTimeEntries
                 let arr = []
                 Promise.all(orders.map( async order => {
-                    const client = await Client.findOne({ "appId": order.clientId})
+                    const client = await Client.findOne({ "_id": order.clientId})
                     order.clientPrices = client.prices
                 })).then(results => res.status(200).json({ orders }));
 
