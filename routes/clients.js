@@ -3,6 +3,42 @@ const Client = require("../models/Client")
 const CryptoJS = require("crypto-js")
 const verify = require("../verifyToken")
 
+// CREATE
+
+router.post("/", async (req, res) => {
+    // if(req.user.isAdmin) {
+        const clientDataFromApp = req.body.data
+
+        let is_credit = clientDataFromApp.is_credit ? true : false
+        let is_frigo = clientDataFromApp.is_frigo ? true : false
+        let is_promo = clientDataFromApp.is_promo ? true : false
+
+        const newClient = new Client ({
+            appId: clientDataFromApp.id,
+            clientName: clientDataFromApp.client_name,
+            phone: clientDataFromApp.phone,
+            region: clientDataFromApp.region,
+            prices: clientDataFromApp.prices,
+            oldCredit: clientDataFromApp.old_credit,
+            isCredit: is_credit,
+            isFrigo: is_frigo,
+            isPromo: is_promo,
+            camion: clientDataFromApp.camion,
+            creditBon: clientDataFromApp.credit_bon,
+            lastServe: clientDataFromApp.last_serve
+        })
+        
+        try {
+            const savedClient = await newClient.save()
+            res.status(200).json(savedClient)
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
+})
+
 //UPDATE
 
 router.put("/:id", verify, async (req, res) => {
