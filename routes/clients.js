@@ -30,7 +30,11 @@ router.post("/", async (req, res) => {
         
         try {
             const savedClient = await newClient.save()
-            res.status(200).json(savedClient)
+            res.status(200).json({
+                status: 1,
+                message: "Client save Successful",
+                data: savedClient
+            })
         } catch (err) {
             res.status(500).json(err)
         }
