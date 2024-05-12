@@ -4,7 +4,7 @@ const PaymentSchema = new mongoose.Schema(
     {
         appId: { type: String, required: true },
         clientName: { type: String, required: true },
-        clientId: { type: String, required: true },
+        clientId: { type: Object, required: true },
         region: { type: String, required: true },
         oldSomme: { type: String, required: true },
         verssi: { type: String, required: true },
