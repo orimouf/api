@@ -18,7 +18,7 @@ router.post("/dataclients", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await Client.findOne({ appId: Element.id})
+        const idCheck = await Client.findOne({ _id: Element.server_id})
         let is_credit = Element.is_credit ? true : false
         let is_frigo = Element.is_frigo ? true : false
         let is_promo = Element.is_promo ? true : false
@@ -449,7 +449,7 @@ router.post("/dataorders", async (req, res) => {
             const newOrder = new Order ({
                 appId: OrderElement.id,
                 clientName: OrderElement.client_name,
-                clientId: OrderElement.client_id,
+                clientId: new mongoose.mongo.ObjectId(OrderElement.client_id),
                 productListId: OrderElement.product_list_id,
                 totalToPay: OrderElement.total_to_pay,
                 verssi: OrderElement.verssi,
@@ -519,7 +519,7 @@ router.post("/datapayments", async (req, res) => {
             const newPayment = new Payment ({
                 appId: Element.id,
                 clientName: Element.client_name,
-                clientId: Element.client_id,
+                clientId: new mongoose.mongo.ObjectId(Element.client_id),
                 region: Element.region,
                 oldSomme: Element.old_somme,
                 verssi: Element.verssi,
