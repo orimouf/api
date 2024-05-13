@@ -103,7 +103,7 @@ router.post("/datausers", async (req, res) => {
 
     async function insertData(Element) {
         var status = ""
-        const idCheck = await User.findOne({ id: Element.server_id})
+        const idCheck = await User.findOne({ _id: Element.server_id})
         if (idCheck != null) {
             try {
                 const appDate = new Date(Element.updatedAt)
@@ -112,9 +112,8 @@ router.post("/datausers", async (req, res) => {
                 if (appDate > serverDate) {
                     const updatedUser = await User.findByIdAndUpdate(idCheck._id, 
                         {
-                            appId: Element.id,
                             username: Element.username,
-                            email: `${Element.username}@gmail.com`,
+                            email: Element.email,
                             password: CryptoJS.AES.encrypt(
                                 Element.password,
                                 process.env.SECRET_KEY
