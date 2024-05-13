@@ -52,6 +52,7 @@ router.post("/dataclients", async (req, res) => {
                     status = "done"
                 }
             } catch (err) {
+                console.log(err);
                 status = err
             }
         } else {
