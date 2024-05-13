@@ -28,6 +28,7 @@ router.post("/dataclients", async (req, res) => {
                 const appDate = new Date(Element.updatedAt)
                 const serverDate = new Date(idCheck.updatedAt)
 
+                console.log(appDate > serverDate);
                 if (appDate > serverDate) {
                     const updatedClient = await Client.findByIdAndUpdate(idCheck._id, 
                         {
