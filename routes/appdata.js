@@ -46,13 +46,11 @@ router.post("/dataclients", async (req, res) => {
                         },
                         { new: true }
                     )
-                    console.log(updatedClient);
                     status = "done"
                 } else {
                     status = "done"
                 }
             } catch (err) {
-                console.log(err);
                 status = err
             }
         } else {

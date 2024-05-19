@@ -7,7 +7,7 @@ const FeesSchema = new mongoose.Schema(
         MealFees: { type: String, required: true },
         OtherCostsSum: { type: String, default: "0" },
         DescriptionFees: { type: String, default: "" },
-        date: { type: String, required: true, unique: true },
+        date: { type: String, required: true, unique: false },
         camion: { type: String, required: true }
     },
     {timestamps: true}
