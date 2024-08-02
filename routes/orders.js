@@ -95,7 +95,9 @@ router.get("/ordresJoin/", async (req, res) => {
         try {
             // const orders = await Order.find()
 
-            Order.aggregate([{
+            Order.aggregate([
+                { $match : { date : "01-08-2024" } },
+                {
                 $lookup: {
                     from: "orderedproducts", // collection name in db
                     localField: "productListId",
