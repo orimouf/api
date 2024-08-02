@@ -87,6 +87,22 @@ router.get("/random", verify, async (req, res) => {
     }
 })
 
+//GET ALL IN SAME DATE
+
+router.get("/date/:date", async (req, res) => {
+    const query = req.query.new
+    // if(req.user.isAdmin) {
+        try {
+            const payments = query ? await Payment.find({ date : req.params.date }).sort({_id: -1}).limit(10) : await Payment.find({ date : req.params.date })
+            res.status(200).json({ payments })
+        } catch (err) {
+            res.status(500).json(err)
+        }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
+})
+
 //GET ALL
 
 router.get("/", async (req, res) => {
