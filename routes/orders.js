@@ -90,13 +90,13 @@ router.get("/random", verify, async (req, res) => {
 
 //GET ALL orders AND orderedProduct JOIN
 
-router.get("/ordresJoin/", async (req, res) => {
+router.get("/ordresJoin/:date", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             // const orders = await Order.find()
 
             Order.aggregate([
-                { $match : { date : "01-08-2024" } },
+                { $match : { date : req.params.date } },
                 {
                 $lookup: {
                     from: "orderedproducts", // collection name in db
