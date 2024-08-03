@@ -92,6 +92,7 @@ router.get("/random", verify, async (req, res) => {
 
 router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
+    console.log(req.params);
     var match
         try {
             // const orders = await Order.find()
