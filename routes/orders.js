@@ -115,7 +115,8 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                 Promise.all(orders.map( async order => {
                     const client = await Client.findOne({ "_id": order.clientId})
                     order.clientPrices = client.prices
-                })).then(results => res.status(200).json({ orders }));
+                })).then(results => res.status(200).json({ orders }))
+                .catch(console.error());
 
             });
             
