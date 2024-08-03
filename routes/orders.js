@@ -116,13 +116,11 @@ console.log("0000000000");
                 Promise.all(orders.map( async order => {
                     console.log("2222222222");
                     const client = await Client.findOne({ "_id": order.clientId})
-                    .catch(function (error) {
+                    .catch(function (err) {
                         res.status(422).json(err)
                     });
-                    console.log("33333333333");
                     order.clientPrices = client.prices
-                    console.log("44444444444");
-                })).then(results => {console.log("55555555555"); res.status(200).json({ orders })})
+                })).then(results => { res.status(200).json({ orders })})
                 .catch(console.error());
 
             });
