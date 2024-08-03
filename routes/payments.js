@@ -95,8 +95,12 @@ router.get("/:type/:value", async (req, res) => {
 
     if(req.params.type === "date") { match = { date : req.params.value } } 
     else if(req.params.type === "clientName") { match = { clientName : req.params.value } } 
-    else if(req.params.type === "clientId") { match = { clientId : req.params.value } } 
-    else { res.status(500).json(err) }
+    else if(req.params.type === "clientId") { 
+        const propertyId = req.params.value;
+        const ObjectId = require('mongoose').Types.ObjectId;
+        const objectId = new ObjectId(propertyId);
+        match = { $match : { clientId : objectId } } 
+    } else { res.status(500).json(err) }
     // if(req.user.isAdmin) {
         try {
             const payments = query ? await Payment.find(match).sort({_id: -1}).limit(10) : await Payment.find(match)

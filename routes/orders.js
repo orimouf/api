@@ -103,8 +103,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                 const ObjectId = require('mongoose').Types.ObjectId;
                 const objectId = new ObjectId(propertyId);
                 match = { $match : { clientId : objectId } } 
-            } 
-            else { res.status(500).json(err) }
+            } else { res.status(500).json(err) }
 
             Order.aggregate([
                 match,
