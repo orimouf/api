@@ -117,7 +117,7 @@ console.log("0000000000");
                     console.log("2222222222");
                     const client = await Client.findOne({ "_id": order.clientId})
                     .catch(function (error) {
-                        res.status(500).json(err)
+                        res.status(422).json(err)
                     });
                     console.log("33333333333");
                     order.clientPrices = client.prices
