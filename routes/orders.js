@@ -98,7 +98,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
             else if(req.params.type === "clientId") { match = { $match : { clientId : ObjectId(req.params.value) } } } 
-            else { res.status(500).json(err) }
+            // else { res.status(500).json(err) }
 
             Order.aggregate([
                 match,
