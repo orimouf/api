@@ -115,7 +115,11 @@ console.log("0000000000");
                 let arr = []
                 Promise.all(orders.map( async order => {
                     console.log("2222222222");
-                    const client = await Client.findOne({ "_id": order.clientId})
+                    const client = await Client.findOne({ "_id": order.clientId}).catch(function (error) {
+                        if (error.response) {
+                          console.log(error.response);
+                        }
+                      });
                     console.log("33333333333");
                     order.clientPrices = client.prices
                     console.log("44444444444");
