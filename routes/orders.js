@@ -98,7 +98,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
             else if(req.params.type === "clientId") { match = { $match : { clientId : ObjectId(req.params.value) } } } 
-            // else { res.status(500).json(err) }
+            else { res.status(500).json(err) }
 
             Order.aggregate([
                 match,
@@ -120,12 +120,12 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                     order.clientPrices = client.prices
                 })).then(results => { res.status(200).json({ orders })})
                 .catch(function (err) {
-                    res.status(500).json(err)
+                    res.status(505).json(err)
                 });
             });
             
         } catch (err) {
-            res.status(500).json(err)
+            res.status(400).json(err)
         }
     // } else {
     //     res.status(500).json("you are not allowed!")
