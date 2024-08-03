@@ -89,11 +89,17 @@ router.get("/random", verify, async (req, res) => {
 
 //GET ALL IN SAME DATE
 
-router.get("/date/:date", async (req, res) => {
+router.get("/:type/:value", async (req, res) => {
     const query = req.query.new
+    var match
+
+    if(req.params.type === "date") { match = { date : req.params.value } } 
+    else if(req.params.type === "clientName") { match = { clientName : req.params.value } } 
+    else if(req.params.type === "clientId") { match = { clientId : req.params.value } } 
+    else { res.status(500).json(err) }
     // if(req.user.isAdmin) {
         try {
-            const payments = query ? await Payment.find({ date : req.params.date }).sort({_id: -1}).limit(10) : await Payment.find({ date : req.params.date })
+            const payments = query ? await Payment.find(match).sort({_id: -1}).limit(10) : await Payment.find(match)
             res.status(200).json({ payments })
         } catch (err) {
             res.status(500).json(err)

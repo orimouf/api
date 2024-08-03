@@ -92,15 +92,13 @@ router.get("/random", verify, async (req, res) => {
 
 router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
-    console.log(req.params);
     var match
         try {
             // const orders = await Order.find()
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
             else if(req.params.type === "clientId") { match = { $match : { clientId : req.params.value } } } 
-            else if(req.params.type === "isCredit") { match = { $match : { isCredit : req.params.value } } } 
-            else { match = { $match : { isCheck : req.params.value } } }
+            else { res.status(500).json(err) }
 
             Order.aggregate([
                 match,
