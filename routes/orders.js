@@ -96,11 +96,11 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
     var match
         try {
             // const orders = await Order.find()
-            if(req.params.type === "date") return match = { $match : { date : req.params.value } } 
-            else if(req.params.type === "clientName") return match = { $match : { clientName : req.params.value } }
-            else if(req.params.type === "clientId") return match = { $match : { clientId : req.params.value } }
-            else if(req.params.type === "isCredit") return match = { $match : { isCredit : req.params.value } }
-            else if(req.params.type === "isCheck") return match = { $match : { isCheck : req.params.value } }
+            if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
+            else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
+            else if(req.params.type === "clientId") { match = { $match : { clientId : req.params.value } } } 
+            else if(req.params.type === "isCredit") { match = { $match : { isCredit : req.params.value } } } 
+            else { match = { $match : { isCheck : req.params.value } } }
 
             Order.aggregate([
                 match,
