@@ -90,13 +90,16 @@ router.get("/random", verify, async (req, res) => {
 
 //GET ALL orders AND orderedProduct JOIN
 
-router.get("/ordresJoin/:date", async (req, res) => {
+router.get("/ordresJoin/", async (req, res) => {
     // if(req.user.isAdmin) {
+    var match
         try {
             // const orders = await Order.find()
-
+            (req.params.type === "date") ? match = { $match : { date : req.params.value } } : match = { $match : { clientName : req.params.value } }
+console.log(req);
+console.log(req.params);
             Order.aggregate([
-                { $match : { date : req.params.date } },
+                match,
                 {
                 $lookup: {
                     from: "orderedproducts", // collection name in db
@@ -110,7 +113,9 @@ router.get("/ordresJoin/:date", async (req, res) => {
                 Promise.all(orders.map( async order => {
                     const client = await Client.findOne({ "_id": order.clientId})
                     order.clientPrices = client.prices
-                })).then(results => res.status(200).json({ orders }));
+                })).then(results => 
+                    console.log(orders),
+                    res.status(200).json({ orders }));
 
             });
             
