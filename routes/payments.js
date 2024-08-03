@@ -92,14 +92,14 @@ router.get("/random", verify, async (req, res) => {
 router.get("/:type/:value", async (req, res) => {
     const query = req.query.new
     var match
-
+    
     if(req.params.type === "date") { match = { date : req.params.value } } 
     else if(req.params.type === "clientName") { match = { clientName : req.params.value } } 
     else if(req.params.type === "clientId") { 
         const propertyId = req.params.value;
         const ObjectId = require('mongoose').Types.ObjectId;
         const objectId = new ObjectId(propertyId);
-        match = { $match : { clientId : objectId } } 
+        match = { clientId : objectId }
     } else { res.status(500).json(err) }
     // if(req.user.isAdmin) {
         try {
