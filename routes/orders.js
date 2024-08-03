@@ -97,9 +97,9 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
             // const orders = await Order.find()
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
-            else if(req.params.type === "clientId") { match = { $match : { clientId : req.params.value } } } 
+            else if(req.params.type === "clientId") { match = { $match : { clientId : ObjectId(req.params.value) } } } 
             else { res.status(500).json(err) }
-console.log("0000000000");
+
             Order.aggregate([
                 match,
                 {
@@ -110,19 +110,18 @@ console.log("0000000000");
                     as: "productsOrdered"
                 }
             }]).exec(function(err, orders) {
-                console.log("1111111111");
                 // students contain WorksnapsTimeEntries
                 let arr = []
                 Promise.all(orders.map( async order => {
-                    console.log("2222222222");
                     const client = await Client.findOne({ "_id": order.clientId})
                     .catch(function (err) {
                         res.status(422).json(err)
                     });
                     order.clientPrices = client.prices
                 })).then(results => { res.status(200).json({ orders })})
-                .catch(console.error());
-
+                .catch(function (err) {
+                    res.status(500).json(err)
+                });
             });
             
         } catch (err) {
