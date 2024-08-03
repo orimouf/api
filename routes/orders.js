@@ -90,14 +90,17 @@ router.get("/random", verify, async (req, res) => {
 
 //GET ALL orders AND orderedProduct JOIN
 
-router.get("/ordresJoin/", async (req, res) => {
+router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
     var match
         try {
             // const orders = await Order.find()
-            (req.params.type === "date") ? match = { $match : { date : req.params.value } } : match = { $match : { clientName : req.params.value } }
-console.log(req);
-console.log(req.params);
+            if(req.params.type === "date") return match = { $match : { date : req.params.value } } 
+            else if(req.params.type === "clientName") return match = { $match : { clientName : req.params.value } }
+            else if(req.params.type === "clientId") return match = { $match : { clientId : req.params.value } }
+            else if(req.params.type === "isCredit") return match = { $match : { isCredit : req.params.value } }
+            else if(req.params.type === "isCheck") return match = { $match : { isCheck : req.params.value } }
+
             Order.aggregate([
                 match,
                 {
@@ -113,9 +116,7 @@ console.log(req.params);
                 Promise.all(orders.map( async order => {
                     const client = await Client.findOne({ "_id": order.clientId})
                     order.clientPrices = client.prices
-                })).then(results => 
-                    console.log(orders),
-                    res.status(200).json({ orders }));
+                })).then(results => res.status(200).json({ orders }));
 
             });
             
