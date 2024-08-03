@@ -94,10 +94,16 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
     var match
         try {
+
             // const orders = await Order.find()
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
-            else if(req.params.type === "clientId") { match = { $match : { clientId : ObjectId(req.params.value) } } } 
+            else if(req.params.type === "clientId") { 
+                const propertyId = req.params.value;
+                const ObjectId = require('mongoose').Types.ObjectId;
+                const objectId = new ObjectId(propertyId);
+                match = { $match : { clientId : objectId } } 
+            } 
             else { res.status(500).json(err) }
 
             Order.aggregate([
