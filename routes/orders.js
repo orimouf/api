@@ -46,7 +46,8 @@ router.put("/:id", verify, async (req, res) => {
                 { new: true }
             )
             console.log("44444444444");
-            res.status(201).json(updatedOrder);
+            res.set('Content-Type', 'application/json');
+            res.status(200).json(updatedOrder);
         } catch (err) {
             console.log("-----------");
             res.status(500).json(err)
