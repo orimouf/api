@@ -2,6 +2,7 @@ const router = require("express").Router()
 const Order = require("../models/Order")
 const Client = require("../models/Client")
 const verify = require("../verifyToken")
+const mongoose = require("mongoose")
 
 // CREATE
 
@@ -25,9 +26,20 @@ router.post("/", verify, async (req, res) => {
 router.put("/:id", verify, async (req, res) => {
     // if(req.user.isAdmin) {
         try {
+            const newData = {
+                clientName: req.body.clientName,
+                clientId: new mongoose.mongo.ObjectId(req.body.clientId),
+                totalToPay: req.body.totalToPay,
+                verssi: req.body.verssi,
+                rest: req.body.rest,
+                date: req.body.date,
+                camion: req.body.camion,
+                isCheck: req.body.isCheck,
+                isCredit: req.body.isCredit
+              }
             const updatedOrder = await Order.findByIdAndUpdate(
                 req.params.id, 
-                { $set: req.body },
+                { $set: newData },
                 { new: true }
             )
             res.status(200).json(updatedOrder)
