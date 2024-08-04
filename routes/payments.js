@@ -21,21 +21,32 @@ router.post("/", verify, async (req, res) => {
 
 //UPDATE
 
-router.put("/:id", verify, async (req, res) => {
-    if(req.user.isAdmin) {
+router.put("/:id", async (req, res) => {
+    // if(req.user.isAdmin) {
         try {
+
+            const newData = {
+                clientName: req.body.clientName,
+                clientId: new mongoose.mongo.ObjectId(req.body.clientId),
+                oldSomme: req.body.totalToPay,
+                verssi: req.body.verssi,
+                rest: req.body.rest,
+                date: req.body.date,
+                camion: req.body.camion,
+                isCheck: req.body.isCheck,
+            }
             const updatedPayment = await Payment.findByIdAndUpdate(
                 req.params.id, 
-                { $set: req.body },
+                { $set: newData },
                 { new: true }
             )
             res.status(200).json(updatedPayment)
         } catch (err) {
             res.status(500).json(err)
         }
-    } else {
-        res.status(500).json("you are not allowed!")
-    }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
 })
 
 //DELETE
