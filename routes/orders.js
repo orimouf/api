@@ -23,7 +23,7 @@ router.post("/", verify, async (req, res) => {
 
 //UPDATE
 
-router.put("/:id", verify, async (req, res) => {
+router.put("/:id", async (req, res) => {
     console.log("0000000000");
     // if(req.user.isAdmin) {
         try {
