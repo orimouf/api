@@ -24,10 +24,8 @@ router.post("/", verify, async (req, res) => {
 //UPDATE
 
 router.put("/:id", async (req, res) => {
-    console.log("0000000000");
     // if(req.user.isAdmin) {
         try {
-            console.log("111111111");
             const newData = {
                 clientName: req.body.clientName,
                 clientId: new mongoose.mongo.ObjectId(req.body.clientId),
@@ -39,17 +37,13 @@ router.put("/:id", async (req, res) => {
                 isCheck: req.body.isCheck,
                 isCredit: req.body.isCredit
             }
-            console.log("333333333333");
             const updatedOrder = await Order.findByIdAndUpdate(
                 req.params.id, 
                 { $set: newData },
                 { new: true }
             )
-            console.log("44444444444");
-            res.set('Content-Type', 'application/json');
             res.status(200).json(updatedOrder);
         } catch (err) {
-            console.log("-----------");
             res.status(500).json(err)
         }
     // } else {
