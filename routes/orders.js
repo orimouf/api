@@ -109,7 +109,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
 
             // const orders = await Order.find()
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
-            else if(req.params.type === "all") { match = { $match : { date:{$gte: "2024-08-01",$lte: "2024-08-10"}} } } 
+            else if(req.params.type === "all") { match = { $match : { date:{$gte: "09-08-2024",$lte: "10-08-2024"}} } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
             else if(req.params.type === "clientId") { 
                 const propertyId = req.params.value;
