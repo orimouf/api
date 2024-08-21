@@ -135,8 +135,23 @@ router.get("/ordresPayments", async (req, res) => {
                 }
              ]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
-                let arr = []
-                Promise.all(orders.map( async order => {
+                let array = []
+                Promise.all(orders.map( async (receive, i) => {
+                    const initialValue = 0;
+                    array.push(
+                        {
+                        id: i+1,
+                        _id: receive._id,
+                        clientName: receive.clientName,
+                        allCapital: receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
+                        allPayment: receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+                        allCredit: receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+                        numberOrder: receive.orders.length,
+                        camion: receive.camion,
+                        numberPayment: receive.payments.length
+                        }
+                    )
+                    return array
                 })).then(results => { res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
