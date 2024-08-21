@@ -126,18 +126,12 @@ router.get("/ordresPayments", async (req, res) => {
                    }
                 },
                 {
-                   $unwind:"$orders"
-                },
-                {
                    $lookup:{
                         from: "payments", // collection name in db
                         localField: "_id",
                         foreignField: "clientId",
                         as: "payments"
                    }
-                },
-                {
-                   $unwind:"$payments"
                 }
              ]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
