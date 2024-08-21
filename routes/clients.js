@@ -138,7 +138,7 @@ router.get("/ordresPayments", async (req, res) => {
                 let array = []
                 Promise.all(orders.map( async (receive, i) => {
                     const initialValue = 0;
-                    receive[2]["id"] = i+1
+                    receive[18]["id"] = i+1
                     // receive.push({"id": i+1}),
                     // receive.push({"allCapital": receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue)}),
                     // receive.push({"allPayment": receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
