@@ -138,21 +138,13 @@ router.get("/ordresPayments", async (req, res) => {
                 let array = []
                 Promise.all(orders.map( async (receive, i) => {
                     const initialValue = 0;
-                    array.push(
-                        {
-                        id: i+1,
-                        _id: receive._id,
-                        clientName: receive.clientName,
-                        allCapital: receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
-                        allPayment: receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
-                        allCredit: receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
-                        numberOrder: receive.orders.length,
-                        camion: receive.camion,
-                        numberPayment: receive.payments.length
-                        }
-                    )
-                    return array
-                })).then(results => { res.status(200).json({ array })})
+                    receive.push({"id": i+1}),
+                    receive.push({"allCapital": receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue)}),
+                    receive.push({"allPayment": receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
+                    receive.push({"allCredit": receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
+                    receive.push({"numberOrder": receive.orders.length}),
+                    receive.push({"numberPayment": receive.payments.length})
+                })).then(results => { res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
                 });
