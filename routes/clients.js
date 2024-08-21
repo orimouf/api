@@ -138,13 +138,14 @@ router.get("/ordresPayments", async (req, res) => {
                 let array = []
                 Promise.all(orders.map( async (receive, i) => {
                     const initialValue = 0;
-                    receive.push({"id": i+1}),
-                    receive.push({"allCapital": receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue)}),
-                    receive.push({"allPayment": receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
-                    receive.push({"allCredit": receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
-                    receive.push({"numberOrder": receive.orders.length}),
-                    receive.push({"numberPayment": receive.payments.length})
-                })).then(results => { console.log(orders); res.status(200).json({ orders })})
+                    receive[2]["id"] = i+1
+                    // receive.push({"id": i+1}),
+                    // receive.push({"allCapital": receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue)}),
+                    // receive.push({"allPayment": receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
+                    // receive.push({"allCredit": receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
+                    // receive.push({"numberOrder": receive.orders.length}),
+                    // receive.push({"numberPayment": receive.payments.length})
+                })).then(results => { res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
                 });
