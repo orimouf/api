@@ -138,13 +138,6 @@ router.get("/ordresPayments", async (req, res) => {
                 },
                 {
                    $unwind:"$payments"
-                },
-                {
-                   $project:{
-                      "_id":1,
-                      "payments":"$payments",
-                      "orders":"$orders"
-                   }
                 }
              ]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
