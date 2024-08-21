@@ -112,6 +112,47 @@ router.get("/", async (req, res) => {
     // }
 })
 
+router.get("/ordresPayment", async (req, res) => {
+    // if(req.user.isAdmin) {
+        try {
+
+            Client.aggregate([
+                // { $match : { date : req.params.value } },
+                {
+                $lookup: {
+                    from: "orders", // collection name in db
+                    localField: "_id",
+                    foreignField: "clientId",
+                    as: "orders"
+                }
+            }]),
+            Client.aggregate([
+                // { $match : { date : req.params.value } },
+                {
+                $lookup: {
+                    from: "payments", // collection name in db
+                    localField: "_id",
+                    foreignField: "clientId",
+                    as: "payments"
+                }
+            }]).exec(function(err, orders) {
+                // students contain WorksnapsTimeEntries
+                let arr = []
+                Promise.all(orders.map( async order => {
+                })).then(results => { res.status(200).json({ orders })})
+                .catch(function (err) {
+                    res.status(505).json(err)
+                });
+            });
+            
+        } catch (err) {
+            res.status(400).json(err)
+        }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
+})
+
 // router.get("/camion01/", async (req, res) => {
 //     const query = req.query.new
 //     // if(req.user.isAdmin) {
