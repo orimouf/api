@@ -150,6 +150,44 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
     // }
 })
 
+//GET ALL orders AND payments JOIN
+
+router.get("/ordresPayment", async (req, res) => {
+    // if(req.user.isAdmin) {
+        try {
+
+            Order.aggregate([
+                // { $match : { date : req.params.value } },
+                {
+                $lookup: {
+                    from: "payments", // collection name in db
+                    localField: "clientId",
+                    foreignField: "clientId",
+                    as: "payments"
+                }
+            }]).exec(function(err, orders) {
+                // students contain WorksnapsTimeEntries
+                let arr = []
+                Promise.all(orders.map( async order => {
+                    const client = await Client.findOne({ "_id": order.clientId})
+                    .catch(function (err) {
+                        res.status(422).json(err)
+                    });
+                    order.clientPrices = client.prices
+                })).then(results => { res.status(200).json({ orders })})
+                .catch(function (err) {
+                    res.status(505).json(err)
+                });
+            });
+            
+        } catch (err) {
+            res.status(400).json(err)
+        }
+    // } else {
+    //     res.status(500).json("you are not allowed!")
+    // }
+})
+
 //GET ALL
 
 router.get("/", async (req, res) => {
