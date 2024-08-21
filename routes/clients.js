@@ -152,7 +152,7 @@ router.get("/ordresPayments", async (req, res) => {
                         }
                     )
                     return array
-                })).then(results => { res.status(200).json({ orders })})
+                })).then(results => { res.status(200).json({ array })})
                 .catch(function (err) {
                     res.status(505).json(err)
                 });
