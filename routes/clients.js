@@ -125,13 +125,13 @@ router.get("/ordresPayments", async (req, res) => {
                     foreignField: "clientId",
                     as: "orders"
                 }
-            }]),
+            }, {$unwind: "$customfieldvalues"}]),
             Client.aggregate([
                 // { $match : { date : req.params.value } },
                 {
                 $lookup: {
                     from: "payments", // collection name in db
-                    localField: "_id",
+                    localField: "customfieldvalues.clientId",
                     foreignField: "clientId",
                     as: "payments"
                 }
