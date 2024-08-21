@@ -112,7 +112,7 @@ router.get("/", async (req, res) => {
     // }
 })
 
-router.get("/ordresPayment", async (req, res) => {
+router.get("/ordresPayments", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
 
