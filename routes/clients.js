@@ -138,12 +138,12 @@ router.get("/ordresPayments", async (req, res) => {
                 let array = []
                 Promise.all(orders.map( async (receive, i) => {
                     const initialValue = 0;
-                    // receive.push({"id": i+1}),
-                    // receive.push({"allCapital": receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue)}),
-                    // receive.push({"allPayment": receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)}),
-                    receive.oldCredit = receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue)
-                    // receive.push({"numberOrder": receive.orders.length}),
-                    // receive.push({"numberPayment": receive.payments.length})
+                    receive.appId = i+1,
+                    receive.lastServe = receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
+                    receive.prices = receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+                    receive.oldCredit = receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+                    receive.creditBon = receive.orders.length,
+                    receive.phone = receive.payments.length
                 })).then(results => { res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
