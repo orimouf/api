@@ -117,25 +117,36 @@ router.get("/ordresPayments", async (req, res) => {
         try {
 
             Client.aggregate([
-                // { $match : { date : req.params.value } },
                 {
-                $lookup: {
-                    from: "orders", // collection name in db
-                    localField: "_id",
-                    foreignField: "clientId",
-                    as: "orders"
-                }
-            }, {$unwind: "$customfieldvalues"}]),
-            Client.aggregate([
-                // { $match : { date : req.params.value } },
+                   $lookup:{
+                        from: "orders", // collection name in db
+                        localField: "_id",
+                        foreignField: "clientId",
+                        as: "orders"
+                   }
+                },
                 {
-                $lookup: {
-                    from: "payments", // collection name in db
-                    localField: "customfieldvalues.clientId",
-                    foreignField: "clientId",
-                    as: "payments"
+                   $unwind:"$orders"
+                },
+                {
+                   $lookup:{
+                        from: "payments", // collection name in db
+                        localField: "_id",
+                        foreignField: "clientId",
+                        as: "payments"
+                   }
+                },
+                {
+                   $unwind:"$payments"
+                },
+                {
+                   $project:{
+                      "_id":1,
+                      "payments":"$payments",
+                      "orders":"$orders"
+                   }
                 }
-            }]).exec(function(err, orders) {
+             ]).exec(function(err, orders) {
                 // students contain WorksnapsTimeEntries
                 let arr = []
                 Promise.all(orders.map( async order => {
