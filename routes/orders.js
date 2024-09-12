@@ -104,8 +104,11 @@ router.get("/random", verify, async (req, res) => {
 
 router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
-    var paramsDate = req.params.value.split('-').reverse().join('/')
-    const searchDate = +(new Date(paramsDate));
+    const dates = req.params.value.split('*')
+    const paramsDateOne = dates[0].split('-').reverse().join('/')
+    const paramsDateTow = dates[1].split('-').reverse().join('/')
+    const searchDateOne = +(new Date(paramsDateOne));
+    const searchDateTow = +(new Date(paramsDateTow));
 
     var match
         try {
@@ -144,7 +147,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                         const orderDate = order.date.split('-').reverse().join('/')
                         const newOrderDate = +(new Date(orderDate));
 
-                        if (newOrderDate <= searchDate) {
+                        if (searchDateTow >= newOrderDate <= searchDateOne) {
                             arr.push(order)
                         }
                     }
