@@ -140,7 +140,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
 
                     if(req.params.type === "all") {
                         const orderDate = +(new Date(order.date));
-                        if (orderDate <= searchDate) {
+                        if (orderDate < searchDate) {
                             arr.push(order)
                         }
                     }
