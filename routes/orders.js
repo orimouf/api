@@ -105,7 +105,7 @@ router.get("/random", verify, async (req, res) => {
 router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
     var searchDateOne = 0;
-    var searchDateTow = 0;
+    var searchDateTwo = 0;
     var match
 
         try {
@@ -115,9 +115,9 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
             else if(req.params.type === "all") { 
                 const dates = req.params.value.split('*')
                 const paramsDateOne = dates[0].split('-').reverse().join('/')
-                const paramsDateTow = dates[1].split('-').reverse().join('/')
+                const paramsDateTwo = dates[1].split('-').reverse().join('/')
                 searchDateOne = +(new Date(paramsDateOne));
-                searchDateTow = +(new Date(paramsDateTow));
+                searchDateTwo = +(new Date(paramsDateTwo));
 
                 match = { $match : { __v : 0 } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
@@ -151,7 +151,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                         const orderDate = order.date.split('-').reverse().join('/')
                         const newOrderDate = +(new Date(orderDate));
 
-                        if (newOrderDate <= searchDateTow && newOrderDate >= searchDateOne) {
+                        if (newOrderDate <= searchDateTwo && newOrderDate >= searchDateOne) {
                             arr.push(order)
                         }
                     }
