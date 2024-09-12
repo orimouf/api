@@ -151,8 +151,10 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                         const orderDate = order.date.split('-').reverse().join('/')
                         const newOrderDate = +(new Date(orderDate));
 
-                        if (searchDateTow >= newOrderDate <= searchDateOne) {
-                            arr.push(order)
+                        if (searchDateTow >= newOrderDate) {
+                            if (newOrderDate <= searchDateOne) {
+                                arr.push(order)
+                            }
                         }
                     }
                     
