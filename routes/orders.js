@@ -104,18 +104,22 @@ router.get("/random", verify, async (req, res) => {
 
 router.get("/ordresJoin/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
-    const dates = req.params.value.split('*')
-    const paramsDateOne = dates[0].split('-').reverse().join('/')
-    const paramsDateTow = dates[1].split('-').reverse().join('/')
-    const searchDateOne = +(new Date(paramsDateOne));
-    const searchDateTow = +(new Date(paramsDateTow));
-
+    var searchDateOne = 0;
+    var searchDateTow = 0;
     var match
+
         try {
 
             // const orders = await Order.find()
             if(req.params.type === "date") { match = { $match : { date : req.params.value } } } 
-            else if(req.params.type === "all") { match = { $match : { __v : 0 } } } 
+            else if(req.params.type === "all") { 
+                const dates = req.params.value.split('*')
+                const paramsDateOne = dates[0].split('-').reverse().join('/')
+                const paramsDateTow = dates[1].split('-').reverse().join('/')
+                searchDateOne = +(new Date(paramsDateOne));
+                searchDateTow = +(new Date(paramsDateTow));
+
+                match = { $match : { __v : 0 } } } 
             else if(req.params.type === "clientName") { match = { $match : { clientName : req.params.value } } } 
             else if(req.params.type === "clientId") { 
                 const propertyId = req.params.value;
