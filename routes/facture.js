@@ -10,11 +10,7 @@ router.post("/", async (req, res) => {
 
         try {
             const savedFacture = await newFacture.save()
-            res.status(200).json({
-                status: 1,
-                message: "Facture save Successful",
-                data: savedFacture
-            })
+            res.status(200).json({savedFacture})
         } catch (err) {
             res.status(500).json(err)
         }
