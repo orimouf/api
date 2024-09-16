@@ -41,7 +41,7 @@ app.use("/api/payments", paymentData)
 app.use("/api/orders", orderRoute)
 app.use("/api/allproducts", orderedProductRoute)
 app.use("/api/appdata", appData)
-app.use("/api/facture", factureRoute)
+app.use("/api/factures", factureRoute)
 
 
 app.listen(8800, () => {
