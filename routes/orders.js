@@ -158,7 +158,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                     
                 })).then(results => { res.status(200).json((req.params.type === "all") ? {arr} : {orders})})
                 .catch(function (err) {
-                    res.status(505).json(err)
+                    res.status(500).json(err)
                 });
             });
             
