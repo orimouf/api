@@ -8,6 +8,8 @@ const verify = require("../verifyToken")
 router.post("/", async (req, res) => {
     // if(req.user.isAdmin) {
         const clientDataFromApp = req.body.data
+        console.log(clientDataFromApp);
+        
 
         let is_credit = clientDataFromApp.is_credit ? true : false
         let is_frigo = clientDataFromApp.is_frigo ? true : false

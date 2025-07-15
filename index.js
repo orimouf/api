@@ -25,6 +25,13 @@ dotenv.config();
 //     .catch((err) => console.log(err));
 // }
 
+//When the strict option is set to true,
+//  Mongoose will ensure that only the fields that are specified 
+// in your schema will be saved in the database, 
+// and all other fields will not be saved (if some other fields are sent).
+
+mongoose.set("strictQuery", false);
+
 mongoose.connect(process.env.MONGO_URL)
 .then(() => console.log("DB connection Successfull!"))
     .catch((err) => console.log(err));

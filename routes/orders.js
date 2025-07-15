@@ -145,6 +145,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                     .catch(function (err) {
                         res.status(422).json(err)
                     });
+                    console.log(order._id + "-----------" +  order.clientName + "-----------" + order.clientId)
                     order.clientPrices = client.prices
 
                     if(req.params.type === "all") {
@@ -158,6 +159,8 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                     
                 })).then(results => { res.status(200).json((req.params.type === "all") ? {arr} : {orders})})
                 .catch(function (err) {
+                    console.log(err);
+                    
                     res.status(500).json(err)
                 });
             });

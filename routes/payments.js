@@ -116,6 +116,8 @@ router.get("/:type/:value", async (req, res) => {
     // if(req.user.isAdmin) {
         try {
             const payments = query ? await Payment.find(match).sort({_id: -1}).limit(10) : await Payment.find(match)
+            console.log(payments.clientName);
+            
             res.status(200).json({ payments })
         } catch (err) {
             res.status(500).json(err)
