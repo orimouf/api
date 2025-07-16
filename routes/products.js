@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Product = require("../models/Product")
+const Client = require("../models/Client")
 const verify = require("../verifyToken")
 
 // CREATE
@@ -10,6 +11,23 @@ router.post("/", async (req, res) => { //verify
 
         try {
             const savedProduct = await newProduct.save()
+
+            const getAllClients = await Client.find()
+
+            getAllClients.map( async client => {
+
+                if (client._id === "6877f12775df58cbeade2f9f") {
+                    client.prices += `:${savedProduct._id}*${savedProduct.price}`
+                }
+                
+                const updateClient = await Client.findByIdAndUpdate("6877f12775df58cbeade2f9f", 
+                            {
+                                $set:client,
+                            },
+                            { new: true }
+                        )
+            })
+
             res.status(200).json(savedProduct)
         } catch (err) {
             res.status(500).json(err)
