@@ -4,7 +4,7 @@ const verify = require("../verifyToken")
 
 // CREATE
 
-router.post("/", verify, async (req, res) => {
+router.post("/", async (req, res) => { //verify
     if(req.user.isAdmin) {
         const newProduct = new Product(req.body)
 
