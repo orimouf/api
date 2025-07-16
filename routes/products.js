@@ -8,6 +8,7 @@ const verify = require("../verifyToken")
 router.post("/", async (req, res) => { //verify
     // if(req.user.isAdmin) {
         const newProduct = new Product(req.body)
+        var lll = false
 
         try {
             const savedProduct = await newProduct.save()
@@ -18,17 +19,23 @@ router.post("/", async (req, res) => { //verify
 
                 if (client._id === "6877f12775df58cbeade2f9f") {
                     client.prices += `:${savedProduct._id}*${savedProduct.price}`
+                    lll = true
                 }
                 
                 const updateClient = await Client.findByIdAndUpdate("6877f12775df58cbeade2f9f", 
-                            {
-                                $set:client,
-                            },
-                            { new: true }
-                        )
+                    {
+                        $set:client,
+                    },
+                    { new: true }
+                )
             })
 
-            res.status(200).json(savedProduct)
+            if (lll) {
+                res.status(200).json(savedProduct)
+            } else {
+                res.status(403).json("savedProduct")
+            }
+            
         } catch (err) {
             res.status(500).json(err)
         }
