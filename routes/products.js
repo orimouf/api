@@ -28,7 +28,9 @@ router.post("/", async (req, res) => { //verify
                     },
                     { new: true }
                 )
-            })
+            }). catch (err => {
+                res.status(500).json(err)
+            }) 
 
             if (lll) {
                 res.status(200).json(savedProduct)
