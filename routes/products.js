@@ -13,24 +13,24 @@ router.post("/", async (req, res) => { //verify
         try {
             const savedProduct = await newProduct.save()
 
-            const getAllClients = await Client.find()
+            const getAllClients = await Client.findById("6877f12775df58cbeade2f9f")
 
-            getAllClients.map( async client => {
+            console.log(getAllClients);
+            
+            // getAllClients.map( async client => {
 
-                if (client._id === "6877f12775df58cbeade2f9f") {
-                    client.prices += `:${savedProduct._id}*${savedProduct.price}`
-                    lll = true
-                }
+                getAllClients.prices += `:${savedProduct._id}*${savedProduct.price}`
+                lll = true
                 
-                const updateClient = await Client.findByIdAndUpdate("6877f12775df58cbeade2f9f", 
+                const updateClient = await Client.findByIdAndUpdate(getAllClients._id, 
                     {
-                        $set:client,
+                        $set:getAllClients,
                     },
                     { new: true }
                 )
-            }). catch (err => {
-                res.status(500).json(err)
-            }) 
+            // }). catch (err => {
+            //     res.status(400).json(err)
+            // }) 
 
             if (lll) {
                 res.status(200).json(savedProduct)
