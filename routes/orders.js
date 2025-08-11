@@ -145,7 +145,7 @@ router.get("/ordresJoin/:type/:value", async (req, res) => {
                     .catch(function (err) {
                         res.status(422).json(err)
                     });
-                    console.log(order._id + "-----------" +  order.clientName + "-----------" + order.clientId)
+                    // console.log(order._id + "-----------" +  order.clientName + "-----------" + order.clientId)
                     order.clientPrices = client.prices
 
                     if(req.params.type === "all") {
@@ -192,7 +192,9 @@ router.get("/ordresPayment", async (req, res) => {
                 // students contain WorksnapsTimeEntries
                 let arr = []
                 Promise.all(orders.map( async order => {
-                })).then(results => { res.status(200).json({ orders })})
+                })).then(results => { 
+                    console.log(orders)
+                    res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
                 });
