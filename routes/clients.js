@@ -146,7 +146,9 @@ router.get("/ordresPayments", async (req, res) => {
                     receive['totalCredit'] = receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
                     receive['totalBonOrders'] = receive.orders.length,
                     receive['totalBonPayments'] = receive.payments.length
-                })).then(results => { res.status(200).json({ orders })})
+                })).then(results => { 
+                    console.log(orders)
+                    res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
                 });

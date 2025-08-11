@@ -192,9 +192,7 @@ router.get("/ordresPayment", async (req, res) => {
                 // students contain WorksnapsTimeEntries
                 let arr = []
                 Promise.all(orders.map( async order => {
-                })).then(results => { 
-                    console.log(orders)
-                    res.status(200).json({ orders })})
+                })).then(results => { res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
                 });
