@@ -147,23 +147,19 @@ router.get("/", async (req, res) => {
                             }
                          ]).exec(function(err, fridges) {
                             // students contain WorksnapsTimeEntries
-                            Promise.all(fridges.map( async (receive, i) => {
-                                if (receive.fridgesPayments.length != 0) {
-                                    const initialValue = 0;
+                            var Data = fridges.filter( e => e.fridgesPayments.length != 0)
+                            Promise.all(Data.map( async (receive, i) => {
+                                const initialValue = 0;
                                 receive.appId = i+1
-                                // receive['totalCapital'] = receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
-                                // receive['totalPayments'] = receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
-                                // receive['totalCredit'] = receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
-                                // receive['totalBonOrders'] = receive.orders.length,
-                                // receive['totalBonPayments'] = receive.payments.length
-                                }
+                                receive['totalFridgeCapital'] = receive.fridgesPayments[0].totalFridgePrice,
+                                receive['totalPayments'] = receive.fridgesPayments.map( e => parseFloat(e.paymentFridgePrice)).reduce((a, b) =>  a + b, initialValue),
+                                receive['totalCredit'] = receive.fridgesPayments[0].totalFridgePrice - receive.fridgesPayments.map( e => parseFloat(e.paymentFridgePrice)).reduce((a, b) =>  a + b, initialValue)
                             })).then(results => { 
-                                res.status(200).json({ fridges })})
+                                res.status(200).json({ Data })})
                             .catch(function (err) {
                                 res.status(505).json(err)
                             });
                         });
-
             // Promise.all(fridges.map( async (fridgesPayments, i) => {
             //         const initialValue = 0;
             //         fridgesPayments.appId = i+1,
