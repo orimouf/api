@@ -1,5 +1,6 @@
 const router = require("express").Router()
 const Fridge = require("../models/Fridge")
+const Client = require("../models/Client")
 const verify = require("../verifyToken")
 const mongoose = require("mongoose")
 
