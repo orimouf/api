@@ -133,8 +133,49 @@ router.get("/", async (req, res) => {
     const query = req.query.new
     // if(req.user.isAdmin) {
         try {
-            const fridges = query ? await Fridge.find().sort({_id: -1}).limit(10) : await Fridge.find()
-            res.status(200).json({ fridges })
+            // const fridges = query ? await Fridge.find().sort({_id: -1}).limit(10) : await Fridge.find()
+
+            Client.aggregate([
+                            {
+                               $lookup:{
+                                    from: "fridges", // collection name in db
+                                    localField: "_id",
+                                    foreignField: "clientId",
+                                    as: "fridges"
+                               }
+                            }
+                         ]).exec(function(err, fridges) {
+                            // students contain WorksnapsTimeEntries
+                            let array = []
+                            Promise.all(fridges.map( async (receive, i) => {
+                                const initialValue = 0;
+                                receive.appId = i+1
+                                // receive['totalCapital'] = receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
+                                // receive['totalPayments'] = receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+                                // receive['totalCredit'] = receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+                                // receive['totalBonOrders'] = receive.orders.length,
+                                // receive['totalBonPayments'] = receive.payments.length
+                            })).then(results => { 
+                                res.status(200).json({ fridges })})
+                            .catch(function (err) {
+                                res.status(505).json(err)
+                            });
+                        });
+
+            // Promise.all(fridges.map( async (fridgesPayments, i) => {
+            //         const initialValue = 0;
+            //         fridgesPayments.appId = i+1,
+            //         fridgesPayments['totalCapital'] = fridgesPayments.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
+            //         fridgesPayments['totalPayments'] = fridgesPayments.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+            //         fridgesPayments['totalCredit'] = fridgesPayments.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - fridgesPayments.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
+            //         fridgesPayments['totalBonOrders'] = fridgesPayments.orders.length,
+            //         fridgesPayments['totalBonPayments'] = fridgesPayments.payments.length
+            //     })).then(results => { 
+            //         res.status(200).json({ orders })})
+            //     .catch(function (err) {
+            //         res.status(505).json(err)
+            //     });
+            // res.status(200).json({ fridges })
         } catch (err) {
             res.status(500).json(err)
         }
