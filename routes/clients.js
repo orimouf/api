@@ -147,7 +147,6 @@ router.get("/ordresPayments", async (req, res) => {
                     receive['totalBonOrders'] = receive.orders.length,
                     receive['totalBonPayments'] = receive.payments.length
                 })).then(results => { 
-                    console.log(orders)
                     res.status(200).json({ orders })})
                 .catch(function (err) {
                     res.status(505).json(err)
