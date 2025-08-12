@@ -142,12 +142,12 @@ router.get("/", async (req, res) => {
                                     from: "fridges", // collection name in db
                                     localField: "_id",
                                     foreignField: "clientId",
-                                    as: "fridges"
+                                    as: "fridgesPayments"
                                }
                             }
                          ]).exec(function(err, fridges) {
                             // students contain WorksnapsTimeEntries
-                            let array = []
+                            fridges.filter( e => e.fridgesPayments.length != 0 )
                             Promise.all(fridges.map( async (receive, i) => {
                                 const initialValue = 0;
                                 receive.appId = i+1
