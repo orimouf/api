@@ -570,7 +570,7 @@ router.post("/datafridgepayments", async (req, res) => {
             const newFridge = new Fridge ({
                 appId: Element.id,
                 clientName: Element.clientName,
-                clientId: new mongoose.mongo.ObjectId(Element.client_id),
+                clientId: new mongoose.mongo.ObjectId(Element.clientId),
                 region: Element.region,
                 totalFridgePrice: Element.totalFridgePrice,
                 paymentFridgePrice: Element.paymentFridgePrice,
