@@ -147,15 +147,16 @@ router.get("/", async (req, res) => {
                             }
                          ]).exec(function(err, fridges) {
                             // students contain WorksnapsTimeEntries
-                            fridges.filter( e => e.fridgesPayments.length != 0 )
                             Promise.all(fridges.map( async (receive, i) => {
-                                const initialValue = 0;
+                                if (receive.fridgesPayments.length != 0) {
+                                    const initialValue = 0;
                                 receive.appId = i+1
                                 // receive['totalCapital'] = receive.orders.map( e => parseFloat(e.totalToPay)).reduce((a, b) =>  a + b, initialValue),
                                 // receive['totalPayments'] = receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
                                 // receive['totalCredit'] = receive.orders.map( e => parseFloat(e.rest)).reduce((a, b) =>  a + b, initialValue) - receive.payments.map( e => parseFloat(e.verssi)).reduce((a, b) =>  a + b, initialValue),
                                 // receive['totalBonOrders'] = receive.orders.length,
                                 // receive['totalBonPayments'] = receive.payments.length
+                                }
                             })).then(results => { 
                                 res.status(200).json({ fridges })})
                             .catch(function (err) {
