@@ -4,6 +4,7 @@ const Client = require("../models/Client")
 const Region = require("../models/Region")
 const Fees = require("../models/Fees")
 const Product = require("../models/Product")
+const Fridge = require("../models/Fridge")
 const Order = require("../models/Order")
 const OrderedProduct = require("../models/OrderedProduct")
 const CryptoJS = require("crypto-js")
@@ -531,6 +532,57 @@ router.post("/datapayments", async (req, res) => {
             try{
                 const payment = await newPayment.save()
                 idObj.push(payment)
+                status = "done"           
+            } catch (err) {
+                status = err
+            }
+        }
+        return status
+    }
+
+    for (let i = 0; i < dataFromApp.length; i++) {
+        reutrnStatus = await insertData(dataFromApp[i])
+    }
+
+    if (reutrnStatus == "done") {
+        res.status(201).json({ idObj })
+    } else {
+        res.status(500).json(reutrnStatus)
+    }
+    
+})
+
+//SET DATA FridgePaymnets
+router.post("/datafridgepayments", async (req, res) => {
+
+    const dataFromApp = req.body.data
+    var idCheck
+    var idObj = []
+    var reutrnStatus
+
+    async function insertData(Element) {
+        var status = ""
+        Element.server_id == "" ? idCheck = null : idCheck = await Fridge.findById(Element.server_id)
+        
+        if (idCheck != null) {
+            status = "done"
+        } else { 
+            const newFridge = new Fridge ({
+                appId: Element.id,
+                clientName: Element.clientName,
+                clientId: new mongoose.mongo.ObjectId(Element.client_id),
+                region: Element.region,
+                totalFridgePrice: Element.totalFridgePrice,
+                paymentFridgePrice: Element.paymentFridgePrice,
+                restFridgePrice: Element.restFridgePrice,
+                date: Element.date,
+                camion: Element.camion,
+                isCheck: Element.isCheck
+            })
+
+            try{
+                const fridge = await newFridge.save()
+                idObj.push(fridge)
                 status = "done"           
             } catch (err) {
                 status = err
