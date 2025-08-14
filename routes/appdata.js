@@ -560,6 +560,9 @@ router.post("/datafridgepayments", async (req, res) => {
     var idObj = []
     var reutrnStatus
 
+    console.log(dataFromApp);
+    
+
     async function insertData(Element) {
         var status = ""
         Element.server_id == "" ? idCheck = null : idCheck = await Fridge.findById(Element.server_id)
